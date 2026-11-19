@@ -1,0 +1,27 @@
+{
+  "name": "daily-report-android",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily Report (บันทึกควบคุมงานประจำวัน) — Capacitor wrapper for Android",
+  "scripts": {
+    "build:www": "node scripts/build-www.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.3",
+    "@capacitor/share": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.2.0",
+    "@fontsource/sarabun": "^5.1.0",
+    "html-to-image": "1.11.13",
+    "html2canvas": "1.4.1",
+    "jspdf": "2.5.1",
+    "pdfjs-dist": "3.11.174",
+    "tesseract.js": "^5.1.1",
+    "xlsx": "0.18.5"
+  }
+}

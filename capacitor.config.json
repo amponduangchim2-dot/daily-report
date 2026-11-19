@@ -1,0 +1,14 @@
+{
+  "appId": "th.ac.nstru.dailyreport",
+  "appName": "Daily Report",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#070b0c"
+  }
+}
