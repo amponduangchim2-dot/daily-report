@@ -47,6 +47,16 @@ jobs:
         continue-on-error: true
         run: npx capacitor-assets generate --android --iconBackgroundColor '#14304F' --iconBackgroundColorDark '#14304F'
 
+      - name: Fix adaptive icon background
+        run: |
+          RES=android/app/src/main/res
+          for f in $RES/mipmap-anydpi-v26/*.xml; do [ -f "$f" ] && sed -i 's#@mipmap/ic_launcher_background#@color/ic_launcher_background#g' "$f"; done
+          if grep -rqs 'name="ic_launcher_background"' $RES/values; then
+            grep -rls 'name="ic_launcher_background"' $RES/values | xargs sed -i 's#<color name="ic_launcher_background">[^<]*<#<color name="ic_launcher_background">\#14304F<#'
+          else
+            printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#14304F</color>\n</resources>\n' > $RES/values/ic_launcher_background_color.xml
+          fi
+
       - name: Sync web into Android
         run: npx cap sync android
 
