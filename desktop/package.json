@@ -1,0 +1,35 @@
+{
+  "name": "daily-report-desktop",
+  "productName": "Daily Report",
+  "version": "1.0.0",
+  "description": "บันทึกควบคุมงานประจำวัน (Daily Report) สำหรับ Windows",
+  "author": "งานอาคารสถานที่และภูมิทัศน์",
+  "private": true,
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "th.ac.nstru.dailyreport.desktop",
+    "productName": "Daily Report",
+    "copyright": "งานอาคารสถานที่และภูมิทัศน์",
+    "directories": { "output": "release" },
+    "files": ["main.js", "icon.png", "www/**/*", "package.json"],
+    "asar": true,
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }],
+      "icon": "icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Daily Report",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "DailyReport-Setup-1.0.exe"
+    },
+    "portable": { "artifactName": "DailyReport-1.0-portable.exe" }
+  }
+}
