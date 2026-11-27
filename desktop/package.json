@@ -1,7 +1,7 @@
 {
   "name": "daily-report-desktop",
   "productName": "Daily Report",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "บันทึกควบคุมงานประจำวัน (Daily Report) สำหรับ Windows",
   "author": "งานอาคารสถานที่และภูมิทัศน์",
   "private": true,
@@ -28,8 +28,8 @@
       "createStartMenuShortcut": true,
       "shortcutName": "Daily Report",
       "deleteAppDataOnUninstall": false,
-      "artifactName": "DailyReport-Setup-1.0.exe"
+      "artifactName": "DailyReport-Setup-${version}.exe"
     },
-    "portable": { "artifactName": "DailyReport-1.0-portable.exe" }
+    "portable": { "artifactName": "DailyReport-${version}-portable.exe" }
   }
 }

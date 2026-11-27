@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#070b0c">
 <script id="early">document.documentElement.dataset.ui=innerWidth>=980?'desktop':'mobile'</script>
-<meta name="app-version" content="1.0">
+<meta name="app-version" content="1.1">
 <title>บันทึกควบคุมงานประจำวัน (Daily Report)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -631,6 +631,23 @@ body.printing .sheets>:last-child{page-break-after:auto;break-after:auto}
 .dz-area{border:1px solid var(--line);border-radius:14px;padding:12px 12px 0;margin:8px 0}
 .dz-arow{display:flex;gap:8px;align-items:flex-end}.dz-arow .ib{margin-bottom:var(--s4)}
 #dzPrev{margin:12px 0;line-height:1.6}
+/* ---------- เวอร์ชัน / อัปเดต ---------- */
+.upd-dot{display:inline-block;margin-left:auto;padding:1px 10px;border-radius:999px;background:var(--warn);color:#111;font-size:var(--fs-1);font-weight:600}
+.upd-dot[hidden]{display:none}
+.upd-bar{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 var(--s4);padding:12px 16px;border:1px solid var(--warn);border-radius:16px;background:var(--warn-soft);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.upd-bar small{display:block;color:var(--muted);font-size:var(--fs-1)}
+.h-ver{display:flex;align-items:center;gap:8px;width:100%;margin:18px 0 8px;padding:8px 0;border:0;background:transparent;color:var(--muted);font:inherit;font-size:var(--fs-1);justify-content:center;cursor:pointer}
+.h-ver .upd-dot{margin-left:6px}
+.ab-head{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.ab-head img{height:56px;width:auto}
+.ab-head small{display:block;color:var(--muted)}
+.ab-ver{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.ab-ver>div{border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.ab-ver small{display:block;color:var(--muted);font-size:var(--fs-1)}
+.ab-ver b{font-size:var(--fs-3)}
+.upd-new{border-color:var(--warn)!important}
+.upd-ok{color:var(--done)}
+.upd-notes{white-space:pre-wrap;margin-top:8px;font-size:var(--fs-2);color:var(--ink)}
 /* ---------- บัญชี / ซิงค์ ---------- */
 [data-sync-badge]{display:inline-flex;align-items:center;justify-content:center}
 [data-sync-badge].sy-ok{color:var(--done)}
@@ -1372,8 +1389,9 @@ function openSettings(){
      SECTIONS.map(s=>'<label class="sw"><span class="ic">'+ico(s.i)+'</span><span class="tx">'+s.n+'</span><input type="checkbox" data-k="'+s.k+'"'+(vis(s.k)?' checked':'')+'><span class="tg"></span></label>').join('')+
      '<h4>ตำแหน่งลายเซ็นใน PDF</h4><div class="seg" id="segSig"><button type="button" data-v="before">ก่อนภาพประกอบ</button><button type="button" data-v="after">ท้ายเอกสาร</button></div>'+
      '<h4>จำนวนภาพต่อแถวใน PDF</h4><div class="seg" id="segCol"><button type="button" data-v="1">1 ภาพ</button><button type="button" data-v="2">2 ภาพ</button><button type="button" data-v="3">3 ภาพ</button></div>'+
-     '<p class="sm-note" style="margin-top:18px">Daily Report เวอร์ชัน '+APP_VER+'</p>';
+     '<h4>เกี่ยวกับแอป</h4><button class="btn line block sy-set" id="setAbout" type="button">'+ico('info')+'<span>Daily Report '+verTxt()+'</span><span class="upd-dot" data-upd-dot hidden>มีอัปเดต</span></button>';
     $('setAcct').onclick=openAccount; Sync.paintBadges();
+    $('setAbout').onclick=openAbout; Upd.paint();
     mb.querySelectorAll('input[data-k]').forEach(i=>i.onchange=()=>{pf.sections[i.dataset.k]=i.checked;save();renderForm()});
     const seg=(id,get,set)=>{const w=$(id);const m=()=>w.querySelectorAll('button').forEach(b=>b.classList.toggle('on',String(get())===b.dataset.v));m();w.querySelectorAll('button').forEach(b=>b.onclick=()=>{set(b.dataset.v);save();m()})};
     seg('segFont',()=>pf.font||'plex',v=>{pf.font=v;applyFont();_fontCss=null}); seg('segPdf',()=>pf.pdfMode||'auto',v=>{pf.pdfMode=v}); seg('segSig',()=>pf.sigPos,v=>pf.sigPos=v); seg('segCol',()=>pf.photoCols,v=>pf.photoCols=+v);
@@ -2360,7 +2378,7 @@ let curView='home', homeQ='';
 const NAV=[
   {k:'home',i:'home',t:'หน้าแรก'},{k:'today',i:'today',t:'รายงานวันนี้'},{k:'cal',i:'cal',t:'ปฏิทิน'},
   {k:'reports',i:'reports',t:'รายงานทั้งหมด'},{k:'boq',i:'sheet',t:'ปร.4 / BOQ'},{k:'scurve',i:'chart',t:'ภาพรวม S-Curve'},
-  {k:'pdfc',i:'pdf',t:'PDF แบบการ์ด'},{k:'pdft',i:'table',t:'PDF แบบตาราง'},{k:'disaster',i:'alert',t:'ประกาศภัยพิบัติ'},{k:'account',i:'user',t:'บัญชี / ซิงค์'},{k:'settings',i:'sliders',t:'ตั้งค่า'}
+  {k:'pdfc',i:'pdf',t:'PDF แบบการ์ด'},{k:'pdft',i:'table',t:'PDF แบบตาราง'},{k:'disaster',i:'alert',t:'ประกาศภัยพิบัติ'},{k:'account',i:'user',t:'บัญชี / ซิงค์'},{k:'about',i:'info',t:'เกี่ยวกับ / อัปเดต'},{k:'settings',i:'sliders',t:'ตั้งค่า'}
 ];
 function tintLogo(src,color){
   return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const x=c.getContext('2d');x.drawImage(im,0,0);x.globalCompositeOperation='source-in';x.fillStyle=color;x.fillRect(0,0,c.width,c.height);res(c.toDataURL('image/png'))};im.onerror=rej;im.src=src});
@@ -2414,7 +2432,7 @@ function openToday(){
 }
 function navAct(k){
   const pid=R().projectId;
-  const m={home:()=>showView('home'),today:openToday,cal:()=>openCalendar(),reports:openReports,boq:()=>openBoq(pid),scurve:()=>openSCurve(pid),pdfc:()=>$('pdfbtn').click(),pdft:()=>openClassic(),account:openAccount,disaster:openDisasters,settings:openSettings};
+  const m={home:()=>showView('home'),today:openToday,cal:()=>openCalendar(),reports:openReports,boq:()=>openBoq(pid),scurve:()=>openSCurve(pid),pdfc:()=>$('pdfbtn').click(),pdft:()=>openClassic(),account:openAccount,disaster:openDisasters,about:openAbout,settings:openSettings};
   if(m[k]) m[k]();
 }
 function buildChrome(){
@@ -2478,15 +2496,18 @@ function renderHome(){
    '<div class="hero-sub"><button class="datepill" id="h-date" type="button">'+ico('cal')+esc(thDate(today))+'</button><span>'+esc(pr.name.trim()||'ยังไม่ตั้งชื่อโครงการ')+'</span></div></div>'+
    '<label class="hsearch">'+ico('search')+'<input id="hq" placeholder="ค้นหารายงาน งาน หรือโครงการ…" aria-label="ค้นหา"></label>'+
    '<div class="hbody">'+
+    (Upd.st==='new'&&Upd.latest?'<button type="button" class="upd-bar" id="h-upd">'+ico('dl')+'<span><b>มีเวอร์ชันใหม่ '+esc(Upd.latest.ver)+'</b><small>ตอนนี้ใช้ '+esc(verTxt())+' · แตะเพื่ออัปเดต</small></span></button>':'')+
     '<div class="hsum"><div class="hs-top"><small>ผลงานสะสมรวมโครงการ</small>'+(st?'<span class="spill '+st+'">'+esc(CLS_ST[st])+'</span>':'')+'</div>'+
       '<b class="hs-num">'+(a==null?'—':fmtN(a,2)+'%')+'</b>'+
       '<div class="hs-bar"><i style="width:'+Math.min(100,a||0)+'%"></i>'+(pl!=null?'<u style="left:calc('+Math.min(100,pl)+'% - 1px)"></u>':'')+'</div>'+
       '<div class="hs-stats"><div><small>แผนงานสะสม</small><b>'+(pl==null?'—':fmtN(pl,2)+'%')+'</b></div><div><small>ผลต่าง</small><b'+(d==null?'':' style="color:'+(d>=0?'var(--done)':'var(--warn)')+'"')+'>'+(d==null?'—':(d>=0?'+':'')+fmtN(d,2)+'%')+'</b></div><div><small>ระยะเวลาสัญญา</small><b>'+esc(dayTxt)+'</b>'+(dayRem?'<small>'+esc(dayRem)+'</small>':'')+'</div></div></div>'+
     '<div class="tiles">'+cards.map(c=>'<button type="button" class="tile"><div class="tile-top"><span class="hc-i">'+ico(c.i)+'</span><span class="ar">'+ico('arrowur')+'</span></div><div><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small></div></button>').join('')+'</div>'+
     '<div class="hhist-wrap"><div class="hhist-h"><h2>ประวัติรายงาน</h2><button type="button" id="h-all">ดูทั้งหมด</button></div><div class="hhist" id="hhist">'+histHTML()+'</div></div>'+
+    '<button type="button" class="h-ver" id="h-ver">Daily Report '+esc(verTxt())+' · '+esc(PLAT_TH[APP_PLATFORM])+'<span class="upd-dot" data-upd-dot hidden>มีอัปเดต</span></button>'+
    '</div>';
   h.querySelectorAll('.tile').forEach((c,i)=>c.onclick=cards[i].f);
   $('h-acct').onclick=openAccount; Sync.paintBadges();
+  $('h-ver').onclick=openAbout; {const u=$('h-upd');if(u)u.onclick=openAbout} Upd.paint();
   $('h-menu').onclick=openSettings; $('h-date').onclick=()=>openCalendar(); $('h-all').onclick=openReports;
   const q=$('hq'); q.value=homeQ; q.oninput=e=>{homeQ=e.target.value;$('hhist').innerHTML=histHTML();bindHist()};
   bindHist();
@@ -2637,7 +2658,8 @@ function openDisasters(){
    - ทำงานแบบออฟไลน์ก่อน: บันทึกลงเครื่องเหมือนเดิม แล้วซิงค์เมื่อมีอินเทอร์เน็ต
    - ข้อมูลแต่ละบัญชีอยู่ที่ users/{uid}/recs (รายงาน โครงการ การตั้งค่า) และ users/{uid}/imgs (ภาพ แยกเป็นชิ้น)
    - ขัดแย้งกัน (แก้รายการเดียวกันจาก 2 เครื่อง) → ฉบับที่แก้ล่าสุดชนะ */
-const APP_VER='1.0';
+const APP_INFO={ver:'1.1',build:0,repo:''};
+const APP_VER=APP_INFO.ver;
 const SYNC_DEFAULT={apiKey:'',projectId:''};
 Object.assign(P,{
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',
@@ -2942,7 +2964,7 @@ function openAccount(){
           '<button class="btn line" id="syOut" type="button">'+ico('logout')+'ออกจากระบบ (เก็บข้อมูลไว้ในเครื่องนี้)</button>'+
           '<button class="btn line danger" id="syWipe" type="button">'+ico('trash')+'ออกจากระบบและล้างข้อมูลในเครื่องนี้</button></div>'+
           '<p class="sm-note">ใช้เครื่องร่วมกับผู้อื่น? เลือก “ล้างข้อมูลในเครื่องนี้” — ข้อมูลยังอยู่ครบบนเซิร์ฟเวอร์ เข้าสู่ระบบใหม่เมื่อไรก็ดึงกลับมาได้</p>'+admin+
-          '<p class="sm-note">Daily Report เวอร์ชัน '+APP_VER+'</p>';
+          '<p class="sm-note">Daily Report '+verTxt()+'</p>';
         $('syNow').onclick=()=>Sync.pass();
         $('syOut').onclick=async()=>{if(!confirm('ออกจากระบบ? ข้อมูลในเครื่องนี้ยังอยู่ แต่จะไม่ซิงค์จนกว่าจะเข้าสู่ระบบอีกครั้ง'))return;await Sync.logout(false);draw()};
         $('syWipe').onclick=async()=>{if(!confirm('ออกจากระบบและลบข้อมูลรายงานทั้งหมดออกจากเครื่องนี้?\n(ข้อมูลที่ซิงค์แล้วยังอยู่บนเซิร์ฟเวอร์ — ถ้าเพิ่งแก้ไขขณะออฟไลน์ ให้กด “ซิงค์ตอนนี้” ก่อน)'))return;await Sync.logout(true);draw()};
@@ -2953,7 +2975,7 @@ function openAccount(){
           '<label class="sm-note" for="syPw">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label><input class="inp" id="syPw" type="password" autocomplete="current-password" placeholder="รหัสผ่าน">'+
           '<p class="sm-note" id="syMsg" role="alert" style="color:var(--warn)"></p>'+
           '<div class="acts"><button class="btn" id="syIn" type="submit">'+ico('user')+'เข้าสู่ระบบ</button><button class="btn line" id="syUp" type="button">'+ico('plus')+'สมัครบัญชีใหม่</button><button class="btn ghost sm" id="syForgot" type="button">ลืมรหัสผ่าน</button></div></form>'+
-          '<p class="sm-note">ข้อมูลที่มีอยู่แล้วในเครื่องนี้จะถูกรวมเข้ากับบัญชีเมื่อเข้าสู่ระบบครั้งแรก</p>'+admin+'<p class="sm-note">Daily Report เวอร์ชัน '+APP_VER+'</p>';
+          '<p class="sm-note">ข้อมูลที่มีอยู่แล้วในเครื่องนี้จะถูกรวมเข้ากับบัญชีเมื่อเข้าสู่ระบบครั้งแรก</p>'+admin+'<p class="sm-note">Daily Report '+verTxt()+'</p>';
         const msg=t=>{$('syMsg').textContent=t};
         const go=async create=>{
           const e=$('syEmail').value.trim(), p=$('syPw').value;
@@ -2972,6 +2994,88 @@ function openAccount(){
       $('syCfgClr').onclick=async()=>{await Sync.setCfg('');draw()};
     };
     draw();
+  });
+}
+
+/* ============ เวอร์ชันและการอัปเดต ============
+   APP_INFO ถูกเขียนทับตอน build (scripts/build-www.mjs) จาก version.json + เลขรอบ build ของ GitHub
+   ตรวจอัปเดตจาก GitHub Releases ของ repo (ต้องเป็น public repo) ผ่าน api.github.com */
+const APP_PLATFORM=(()=>{try{if(window.Capacitor&&Capacitor.getPlatform&&Capacitor.getPlatform()==='android')return 'android'}catch(e){}
+  return /Electron/i.test(navigator.userAgent)?'windows':'web'})();
+const PLAT_TH={android:'แอป Android (APK)',windows:'โปรแกรม Windows (.exe)',web:'เว็บเบราว์เซอร์ (ไฟล์ HTML)'};
+const verTxt=()=>'เวอร์ชัน '+APP_VER+(APP_INFO.build?' รุ่น '+APP_INFO.build:'');
+const Upd=(()=>{
+  let latest=null, st='idle', err='', last=0, shown=false;
+  const cmp=(a,b)=>{const x=String(a).split('.').map(n=>parseInt(n,10)||0),y=String(b).split('.').map(n=>parseInt(n,10)||0);
+    for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d}return 0};
+  const isNewer=l=>!!l&&!!l.ver&&(cmp(l.ver,APP_VER)>0||(cmp(l.ver,APP_VER)===0&&APP_INFO.build>0&&l.build>APP_INFO.build));
+  function paint(){document.querySelectorAll('[data-upd-dot]').forEach(e=>e.hidden=st!=='new')}
+  async function check(){
+    if(!APP_INFO.repo){st='norepo';err='ไฟล์นี้ไม่ได้สร้างจาก GitHub จึงตรวจอัปเดตอัตโนมัติไม่ได้';paint();return null}
+    st='wait'; err='';
+    let r;
+    try{r=await fetch('https://api.github.com/repos/'+APP_INFO.repo+'/releases/latest',{headers:{Accept:'application/vnd.github+json'},cache:'no-store'})}
+    catch(e){st='err';err='ไม่มีการเชื่อมต่ออินเทอร์เน็ต';paint();return null}
+    if(r.status===404){st='err';err='ไม่พบไฟล์อัปเดตบน GitHub (repo อาจยังเป็นแบบ Private หรือยังไม่เคยเผยแพร่เวอร์ชัน)';paint();return null}
+    if(r.status===403||r.status===429){st='err';err='ตรวจบ่อยเกินไป กรุณาลองใหม่ในอีกสักครู่';paint();return null}
+    if(!r.ok){st='err';err='ตรวจอัปเดตไม่สำเร็จ (HTTP '+r.status+')';paint();return null}
+    let j; try{j=await r.json()}catch(e){st='err';err='ข้อมูลอัปเดตไม่ถูกต้อง';paint();return null}
+    const ver=String(j.tag_name||'').replace(/^v/i,'').split('-')[0].trim();
+    const bm=(String(j.name||'')+' '+String(j.body||'')).match(/(?:build|รุ่น)\s*(\d+)/i);
+    const A=(Array.isArray(j.assets)?j.assets:[]).filter(a=>a&&/^https:\/\/github\.com\//.test(a.browser_download_url||'')).map(a=>({n:String(a.name),u:a.browser_download_url,s:+a.size||0}));
+    const pick=re=>A.find(a=>re.test(a.n))||null;
+    latest={ver,build:bm?+bm[1]:0,date:j.published_at||'',page:/^https:\/\/github\.com\//.test(j.html_url||'')?j.html_url:'',
+      notes:String(j.body||'').replace(/\r/g,'').split('\n').filter(l=>!/^\s*(build|รุ่น)\s*:?\s*\d+\s*$/i.test(l)).join('\n').trim().slice(0,3000),
+      apk:pick(/\.apk$/i),exe:pick(/setup.*\.exe$/i),portable:pick(/portable.*\.exe$/i),web:pick(/\.html$/i)};
+    st=isNewer(latest)?'new':'latest'; last=Date.now();
+    try{localStorage.setItem('dr-upd-last',String(last));localStorage.setItem('dr-upd-cache',JSON.stringify(latest))}catch(e){}
+    paint(); if(curView==='home') renderHome();
+    return latest;
+  }
+  function auto(){
+    try{last=+localStorage.getItem('dr-upd-last')||0;const c=JSON.parse(localStorage.getItem('dr-upd-cache')||'null');if(c&&c.ver){latest=c;st=isNewer(c)?'new':'latest'}}catch(e){}
+    paint();
+    if(APP_INFO.repo&&Date.now()-last>6*3600e3) setTimeout(()=>{check().then(()=>{if(st==='new'&&!shown){shown=true;toast('มีเวอร์ชันใหม่ '+latest.ver+' — แตะ “เกี่ยวกับแอป / อัปเดต” ในเมนูตั้งค่า')}}).catch(()=>{})},3000);
+  }
+  return {check,auto,paint,isNewer,get latest(){return latest},get st(){return st},get err(){return err},get last(){return last}};
+})();
+function openExt(u){
+  if(!/^https:\/\//.test(String(u||''))) return;
+  if(APP_PLATFORM==='android') location.href=u;        // แอป Android: เปิดเบราว์เซอร์ของเครื่องเพื่อดาวน์โหลด
+  else window.open(u,'_blank','noopener');               // Windows / เว็บ: เปิดในเบราว์เซอร์
+}
+const fmtMB=b=>b?' · '+(b/1048576).toFixed(b>10485760?0:1)+' MB':'';
+function openAbout(){
+  openModal('เกี่ยวกับแอป / อัปเดต',mb=>{
+    const draw=()=>{
+      if(modal.hidden||$('mt').textContent!=='เกี่ยวกับแอป / อัปเดต') return;
+      const l=Upd.latest, s=Upd.st;
+      let box='';
+      if(s==='wait') box='<div class="stbox">กำลังตรวจหาอัปเดต…</div>';
+      else if(s==='new'&&l){
+        const main=APP_PLATFORM==='android'?l.apk:APP_PLATFORM==='windows'?l.exe:l.web;
+        const how=APP_PLATFORM==='android'?'กด “ดาวน์โหลด” → เมื่อโหลดเสร็จ แตะไฟล์ .apk → <b>อัปเดต/ติดตั้ง</b> ทับของเดิม (ข้อมูลไม่หาย)'
+          :APP_PLATFORM==='windows'?'กด “ดาวน์โหลด” → ปิดโปรแกรมนี้ → ดับเบิลคลิกไฟล์ Setup ที่ได้ ติดตั้งทับของเดิม (ข้อมูลไม่หาย)'
+          :'กด “ดาวน์โหลด” → เปิดไฟล์ daily-report.html ใหม่แทนไฟล์เดิม (ข้อมูลอยู่ในเบราว์เซอร์และบนบัญชี ไม่หาย)';
+        box='<div class="stbox upd-new"><b>มีเวอร์ชันใหม่ '+esc(l.ver)+(l.build?' รุ่น '+l.build:'')+'</b>'+(l.date?'<small> · เผยแพร่ '+esc(thDate(l.date.slice(0,10),false))+'</small>':'')+
+          (l.notes?'<div class="upd-notes">'+esc(l.notes)+'</div>':'')+
+          '<div class="acts" style="margin-top:12px">'+(main?'<button class="btn" type="button" data-dl="'+esc(main.u)+'">'+ico('dl')+'ดาวน์โหลด '+esc(main.n)+fmtMB(main.s)+'</button>':'<p class="sm-note">ยังไม่มีไฟล์สำหรับ '+esc(PLAT_TH[APP_PLATFORM])+' ในเวอร์ชันนี้</p>')+
+          (APP_PLATFORM==='windows'&&l.portable?'<button class="btn line sm" type="button" data-dl="'+esc(l.portable.u)+'">แบบพกพา (portable)'+fmtMB(l.portable.s)+'</button>':'')+'</div>'+
+          '<p class="sm-note">'+how+'</p></div>';
+      }else if(s==='latest'&&l) box='<div class="stbox upd-ok">'+ico('check')+' ใช้เวอร์ชันล่าสุดแล้ว'+(l.ver?' ('+esc(l.ver)+(l.build?' รุ่น '+l.build:'')+')':'')+'</div>';
+      else if(s==='err'||s==='norepo') box='<div class="stbox" style="border-color:var(--warn)">'+esc(Upd.err)+'</div>';
+      const other=l&&s!=='wait'?[['แอป Android (.apk)',l.apk],['โปรแกรม Windows (Setup .exe)',l.exe],['Windows แบบพกพา',l.portable],['เว็บ (daily-report.html)',l.web]].filter(x=>x[1]):[];
+      mb.innerHTML='<div class="ab-head"><img src="'+LOGO_FULL+'" alt=""><div><b>Daily Report</b><small>บันทึกควบคุมงานประจำวัน</small></div></div>'+
+        '<div class="ab-ver"><div><small>เวอร์ชัน</small><b>'+esc(APP_VER)+'</b></div><div><small>รุ่น (build)</small><b>'+(APP_INFO.build||'—')+'</b></div><div><small>ใช้งานบน</small><b>'+esc(PLAT_TH[APP_PLATFORM])+'</b></div></div>'+
+        box+
+        '<button class="btn line block" id="abCheck" type="button"'+(s==='wait'?' disabled':'')+'>'+ico('refresh')+'ตรวจหาอัปเดตตอนนี้</button>'+
+        (Upd.last?'<p class="sm-note">ตรวจล่าสุด '+new Date(Upd.last).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})+' · แอปตรวจให้เองเมื่อเปิดใช้งาน</p>':'<p class="sm-note">แอปตรวจหาอัปเดตให้เองเมื่อเปิดใช้งาน (เมื่อมีอินเทอร์เน็ต)</p>')+
+        (other.length?'<details class="sy-admin"><summary>ไฟล์ทั้งหมดของเวอร์ชันล่าสุด (สำหรับติดตั้งเครื่องอื่น)</summary>'+other.map(x=>'<button type="button" class="btn ghost sm" data-dl="'+esc(x[1].u)+'">'+ico('dl')+esc(x[0])+fmtMB(x[1].s)+'</button>').join('')+'</details>':'');
+      $('abCheck').onclick=async()=>{const p=Upd.check();draw();await p;draw()};
+      mb.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>openExt(b.dataset.dl));
+    };
+    draw();
+    if(Upd.st!=='wait'&&APP_INFO.repo&&Date.now()-Upd.last>60000){Upd.check().then(draw,draw);draw()}
   });
 }
 
@@ -3000,6 +3104,7 @@ async function init(){
   wxApplyAll(); if(dzApplyAll()) save();
   askPersist();
   Sync.start();
+  Upd.auto();
   const n=Object.keys(app.reports).length, lb=PF().lastBackup, days=lb?dayDiff(lb,todayS()):null;
   if(((!lb&&n>=3)||(lb&&days>=7))&&!Sync.user) setTimeout(()=>toast('ยังไม่ได้สำรองข้อมูล'+(lb?' มา '+days+' วัน':'')+' — กด “รายงาน” แล้วส่งออกไฟล์ .json ไว้'),1500);
 }

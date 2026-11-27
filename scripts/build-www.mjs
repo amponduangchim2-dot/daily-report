@@ -70,6 +70,18 @@ if (!h.includes(SYNC_LINE)) throw new Error('ไม่พบจุดตั้�
 h = h.replace(SYNC_LINE, 'const SYNC_DEFAULT=' + JSON.stringify(fb) + ';');
 console.log(fb.apiKey ? 'ฝังค่า Firebase แล้ว: ' + fb.projectId : 'ยังไม่ได้ตั้งค่า Firebase — ผู้ใช้ต้องกรอกค่าเซิร์ฟเวอร์ในแอปเอง (ดู README-TH.md)');
 
+// เวอร์ชัน / รุ่น / ที่เก็บไฟล์อัปเดต
+const vj = JSON.parse(fs.readFileSync(P('version.json'), 'utf8'));
+const ver = String(vj.version || '').trim();
+if (!/^\d+(\.\d+){0,2}$/.test(ver)) throw new Error('version.json: version ต้องเป็นตัวเลข เช่น 1.1');
+const build = parseInt(process.env.GITHUB_RUN_NUMBER || '0', 10) || 0;
+const repo = String(process.env.RELEASE_REPO || process.env.GITHUB_REPOSITORY || '').trim();
+if (repo && !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repo)) throw new Error('RELEASE_REPO รูปแบบไม่ถูกต้อง (ต้องเป็น owner/repo)');
+const INFO_RE = /const APP_INFO=\{[^}]*\};/;
+if (!INFO_RE.test(h)) throw new Error('ไม่พบ APP_INFO ใน HTML');
+h = h.replace(INFO_RE, 'const APP_INFO=' + JSON.stringify({ ver, build, repo }) + ';').replace(/<meta name="app-version" content="[^"]*">/, '<meta name="app-version" content="' + ver + '">');
+console.log('เวอร์ชัน', ver, '· รุ่น', build, '· อัปเดตจาก', repo || '(ไม่มี)');
+
 // ไฟล์เว็บเวอร์ชันสำหรับคอมพิวเตอร์ (ไฟล์เดียว เปิดด้วย Chrome) ที่ฝังค่าเซิร์ฟเวอร์แล้ว
 fs.mkdirSync(P('dist'), { recursive: true });
 fs.writeFileSync(P('dist/daily-report.html'), h);
@@ -100,7 +112,7 @@ rep('async function saveFile(filename,blob){', 'async function saveFile(filename
 rep("if((PF().pdfMode||'auto')==='print'||!window.jspdf){", "if(((PF().pdfMode||'auto')==='print'&&!(window.NativeBridge&&NativeBridge.active))||!window.jspdf){");
 
 // นโยบายความปลอดภัยของหน้า (CSP) + สะพาน Android
-const SYNC_HOSTS = 'https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com';
+const SYNC_HOSTS = 'https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://api.github.com';
 const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' data: blob: https://cdn.jsdelivr.net https://tessdata.projectnaptha.com " + SYNC_HOSTS + "; object-src 'none'; base-uri 'none'; form-action 'none'";
 rep(/<meta http-equiv="Content-Security-Policy"[^>]*>/, `<meta http-equiv="Content-Security-Policy" content="${CSP}">\n<script src="native-bridge.js"></script>`);
 
