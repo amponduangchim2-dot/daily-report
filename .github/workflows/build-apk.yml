@@ -39,7 +39,10 @@ jobs:
 
       - name: Build www
         run: node scripts/build-www.mjs
-
+        
+      - name: Check OCR (Thai)
+        continue-on-error: true
+        run: node scripts/ocr-check.mjs
       - name: Add Android project
         run: npx cap add android
 
