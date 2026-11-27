@@ -17,11 +17,15 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.2.0",
     "@fontsource/sarabun": "^5.1.0",
+    "clipper-lib": "6.4.2",
     "html-to-image": "1.11.13",
     "html2canvas": "1.4.1",
     "jspdf": "2.5.1",
+    "onnxruntime-web": "1.31.1",
     "pdfjs-dist": "3.11.174",
+    "puppeteer-core": "^23.11.1",
     "tesseract.js": "^5.1.1",
+    "thai-ocr-web": "0.2.0",
     "xlsx": "0.18.5"
   }
 }

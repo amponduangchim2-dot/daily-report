@@ -663,6 +663,44 @@ body.printing .sheets>:last-child{page-break-after:auto;break-after:auto}
 .sy-admin textarea{font-family:ui-monospace,Consolas,monospace;font-size:12px;margin-top:8px}
 #syForm .inp{margin:4px 0 10px}
 .btn.line.danger{color:var(--danger)}
+/* ---------- ปริมาณงาน (BOQ) ---------- */
+.imrow .qu{grid-column:3/5;display:flex;gap:6px}.imrow .qu .qt{flex:1.2}.imrow .qu .ut{flex:1}
+.bqi-q{margin-top:var(--s3)}.bqi-q label>span{display:block;font-size:var(--fs-1);color:var(--muted);margin-bottom:2px}
+.bqi-q input{width:100%;min-height:var(--h-sm);font:inherit;font-size:var(--fs-2);border:1px solid var(--line);border-radius:var(--r-s);padding:6px 10px;background:var(--field);color:var(--ink);box-sizing:border-box}
+.bqq{display:flex;align-items:center;gap:8px;margin-top:var(--s2);font-size:var(--fs-2);color:var(--muted)}
+.cbody .bqq input{width:110px;min-height:var(--h-sm);padding:6px 10px;text-align:right}
+/* ---------- OCR: อ่านภาพ / PDF ---------- */
+.ocr-top{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;margin:-4px 0 var(--s4)}
+.ocr-top small{color:var(--muted);font-size:var(--fs-1)}
+.scan-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s2);margin:var(--s3) 0}
+.scan-list{display:flex;flex-wrap:wrap;gap:6px}
+.scan-f{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:3px 3px 3px 10px;border:1px solid var(--line);border-radius:999px;font-size:var(--fs-1);background:var(--surface2)}
+.scan-f>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.scan-f .ib{width:30px;height:30px;min-height:30px;min-width:30px}
+.ocr-eng>span{display:block;font-size:var(--fs-1);color:var(--muted);margin-bottom:2px}.ocr-eng b{display:block;font-size:var(--fs-2);font-weight:500;padding-top:6px}
+.ocr-prog{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-top:var(--s2);border:1px solid var(--accent-line);border-radius:14px;background:var(--accent-soft);font-size:var(--fs-2)}
+.spin{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid var(--accent-line);border-top-color:var(--accent);animation:ocrspin .8s linear infinite}
+@keyframes ocrspin{to{transform:rotate(360deg)}}
+.ocr-f{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
+.ocr-f>input[type=checkbox],.ocr-m>input[type=checkbox]{width:20px;height:20px;margin-top:6px;accent-color:var(--tq)}
+.ocr-f .lb{font-size:var(--fs-1);color:var(--muted);margin-bottom:4px;display:flex;flex-wrap:wrap;gap:2px 10px}
+.ocr-f .old{color:var(--faint)}
+.ocr-f.off .v{opacity:.55}
+.ocr-f .inp,.ocr-tx{display:block;width:100%;font:inherit;font-size:var(--fs-2);min-height:var(--h-sm);border:1px solid var(--line);border-radius:var(--r-s);padding:6px 10px;background:var(--field);color:var(--ink);resize:vertical;box-sizing:border-box}
+.ocr-tx{margin:6px 0}
+.ocr-d{margin:10px 0}.ocr-d summary{cursor:pointer;color:var(--muted);font-size:var(--fs-2);padding:6px 0}
+.ocr-thumbs{display:flex;gap:8px;overflow-x:auto;padding:4px 0}.ocr-thumbs img{height:150px;width:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+.ocr-m{display:grid;grid-template-columns:28px 1fr 96px 84px;gap:6px;align-items:start;padding:6px 0;border-bottom:1px solid var(--line)}
+.ocr-m input:not([type=checkbox]){width:100%;min-width:0;min-height:var(--h-sm);font:inherit;font-size:var(--fs-2);border:1px solid var(--line);border-radius:var(--r-s);padding:6px 10px;background:var(--field);color:var(--ink);box-sizing:border-box}
+.ocr-m.off{opacity:.45}
+.ocr-grid{overflow:auto;max-height:300px;border:1px solid var(--line);border-radius:10px}
+.ocr-grid table{border-collapse:collapse;font-size:var(--fs-1)}.ocr-grid th,.ocr-grid td{border:1px solid var(--line);padding:3px 6px;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.ocr-grid th{background:var(--surface2);color:var(--muted);font-weight:500;position:sticky;top:0}
+.ocr-grid .cn{background:var(--done-soft)}.ocr-grid .ca{background:var(--warn-soft)}.ocr-grid .co{background:var(--accent-soft)}
+.ocr-pre{white-space:pre-wrap;font:inherit;font-size:var(--fs-1);max-height:240px;overflow:auto;margin:0}
+.ocr-tb{margin-top:-6px}
+.ocr-fac{padding:8px 12px;border:1px solid var(--accent-line);border-radius:12px;background:var(--accent-soft);color:var(--ink)}
+@media (max-width:540px){.ocr-m{grid-template-columns:28px 1fr 1fr}.ocr-m .n{grid-column:2/4}.ocr-m .q{grid-column:2}.ocr-m .u{grid-column:3}}
 </style>
 </head>
 <body>
@@ -1012,6 +1050,7 @@ REND.project=b=>{
   const opts=Object.values(app.projects).map(p=>'<option value="'+esc(p.id)+'"'+(p.id===pr.id?' selected':'')+'>'+esc(p.name||'(ยังไม่ตั้งชื่อ)')+'</option>').join('');
   b.innerHTML=
    '<label class="fl"><span>เลือกโครงการ (ใช้ชื่อเดิมจากครั้งก่อนได้)</span><select id="projSel">'+opts+'<option value="__new">＋ สร้างโครงการใหม่…</option></select></label>'+
+   '<div class="ocr-top"><button class="btn ghost sm" id="pScan" type="button">'+ico('scan')+'อ่านข้อมูลจากเอกสาร (ภาพถ่าย / PDF)</button><small>สัญญาจ้าง · ปร.4–ปร.5 · ใบสั่งจ้าง · หนังสือแจ้งเริ่มงาน</small></div>'+
    '<label class="fl"><span>ชื่อโครงการ</span><textarea rows="1" data-b="name" placeholder="ชื่อโครงการ"></textarea></label>'+
    '<div class="g2"><label class="fl"><span>ผู้ว่าจ้าง</span><input data-b="client"></label><label class="fl"><span>ผู้รับจ้าง</span><input data-b="contractor"></label></div>'+
    '<label class="fl"><span>สถานที่ก่อสร้าง</span><input data-b="location" id="pLoc" placeholder="เช่น ม.4 ต.ท่างิ้ว อ.เมืองนครศรีธรรมราช จ.นครศรีธรรมราช"></label>'+
@@ -1024,7 +1063,7 @@ REND.project=b=>{
    '<div class="g2 keep"><label class="fl"><span>วันเริ่มสัญญา</span><input type="date" data-b="start"></label><label class="fl"><span>อายุสัญญา (วัน)</span><input type="number" inputmode="numeric" min="0" data-b="days"></label></div>'+
    '<div class="rowbar"><span class="sm-note" style="margin:0" id="pBoqInfo"></span><button class="btn ghost sm" id="pBoq" type="button">'+ico('sheet')+'ปร.4 / BOQ</button></div>';
   const bqi=()=>{const q=boqOf(pr.id);$('pBoqInfo').textContent=q.items.length?'ปร.4: '+q.items.length+' รายการ · '+fmtN(contractSum(q),2)+' บาท':'ยังไม่มีข้อมูล ปร.4'};bqi();
-  $('pBoq').onclick=()=>openBoq(pr.id);
+  $('pBoq').onclick=()=>openBoq(pr.id); $('pScan').onclick=openProjScan;
   bind(b,pr,k=>{
     if(k==='name'){const o=b.querySelector('#projSel option[value="'+esc(pr.id)+'"]');if(o)o.textContent=pr.name||'(ยังไม่ตั้งชื่อ)';renderBar()}
     if(k==='start'||k==='days'){updDateInfo();boqSyncProgress(R());rerender('progress');rerender('boq')}
@@ -1186,7 +1225,7 @@ REND.materials=b=>{
     b.innerHTML=
      (r.materials.length?'':'<p class="muted">ยังไม่มีรายการ</p>')+
      r.materials.map(m=>'<div class="mat" data-id="'+esc(m.id)+'"><input class="n" list="matDl" placeholder="รายการวัสดุ / อุปกรณ์"><div class="mrow"><input class="q" type="number" step="any" inputmode="decimal" placeholder="จำนวน"><input class="u" list="unitDl" placeholder="หน่วย"><input class="o" placeholder="หมายเหตุ"><button type="button" class="ib danger del" aria-label="ลบ">'+ico('trash')+'</button></div></div>').join('')+
-     '<div class="rowbar"><button type="button" class="btn ghost sm" id="mAddB">'+ico('plus')+'เพิ่มรายการ</button>'+
+     '<div class="rowbar"><button type="button" class="btn ghost sm" id="mAddB">'+ico('plus')+'เพิ่มรายการ</button><button type="button" class="btn ghost sm" id="mScan">'+ico('scan')+'อ่านจากใบส่งของ</button>'+
      (prev&&prev.materials.length?'<button type="button" class="btn line sm" id="mCopy">'+ico('copy')+'ดึงจากรายงานก่อนหน้า</button>':'')+'</div>';
     b.querySelectorAll('.mat').forEach(row=>{
       const m=r.materials.find(x=>x.id===row.dataset.id);
@@ -1195,6 +1234,7 @@ REND.materials=b=>{
       row.querySelector('.del').onclick=()=>{r.materials.splice(r.materials.indexOf(m),1);save();draw()};
     });
     $('mAddB').onclick=()=>{r.materials.push({id:uid(),n:'',q:'',u:'',o:''});save();draw();const l=b.querySelectorAll('.mat .n');l[l.length-1].focus()};
+    $('mScan').onclick=openMatScan;
     const cp=$('mCopy'); if(cp) cp.onclick=()=>{prev.materials.forEach(m=>r.materials.push({...m,id:uid()}));save();draw();toast('ดึงรายการจากรายงานวันที่ '+thDate(prev.date,false)+' แล้ว — แก้จำนวนได้')};
   };
   draw();
@@ -1234,7 +1274,7 @@ REND.work=b=>{
     b.innerHTML=
      (r.work.length?'':'<p class="muted">ยังไม่มีรายการ — เพิ่มงานเอง หรือใช้ปุ่มลัดด้านล่างช่วยกรอก</p>')+
      r.work.map((w,i)=>'<div class="wk" data-id="'+esc(w.id)+'"><div class="wk-n">'+(i+1)+'</div><div class="grow"><textarea class="t" rows="2" placeholder="รายละเอียดงานที่ปฏิบัติ"></textarea><div class="m2"><input class="a" placeholder="พื้นที่ / ตำแหน่ง"><div class="pct"><input class="p" type="number" min="0" max="100" inputmode="numeric" placeholder="ผลงาน"><span>%</span></div></div></div><button type="button" class="ib danger del" aria-label="ลบ">'+ico('trash')+'</button></div>').join('')+
-     '<div class="rowbar"><button type="button" class="btn ghost sm" id="wAdd">'+ico('plus')+'เพิ่มงาน</button>'+
+     '<div class="rowbar"><button type="button" class="btn ghost sm" id="wAdd">'+ico('plus')+'เพิ่มงาน</button><button type="button" class="btn ghost sm" id="wScan">'+ico('scan')+'อ่านจากภาพ</button>'+
      (prev&&prev.work.length?'<button type="button" class="btn line sm" id="wCopy">'+ico('copy')+'คัดลอกงานจาก '+esc(thDate(prev.date,false))+'</button>':'')+'</div>'+
      ((hist.length||starters.length)?'<details class="sug"'+(r.work.length?'':' open')+'><summary>ปุ่มลัด — แตะเพื่อเพิ่มเป็นรายการงาน</summary>'+
        (hist.length?'<div class="lt">ที่เคยใช้ในโครงการนี้</div><div class="chips">'+hist.map((t,i)=>'<button type="button" class="chip" data-h="'+i+'">+ '+esc(t)+'</button>').join('')+'</div>':'')+
@@ -1247,6 +1287,7 @@ REND.work=b=>{
     });
     const addT=t=>{r.work.push({id:uid(),t,area:'',pct:''});save();draw()};
     $('wAdd').onclick=()=>{addT('');const l=b.querySelectorAll('.wk .t');l[l.length-1].focus()};
+    $('wScan').onclick=()=>openTextScan('work','รายละเอียดงานที่ปฏิบัติ');
     const cp=$('wCopy'); if(cp) cp.onclick=()=>{prev.work.forEach(w=>r.work.push({...w,id:uid()}));save();draw();toast('คัดลอกแล้ว — ปรับข้อความและ % ผลงานของวันนี้ได้')};
     b.querySelectorAll('[data-h]').forEach(x=>x.onclick=()=>addT(hist[+x.dataset.h]));
     b.querySelectorAll('[data-s]').forEach(x=>x.onclick=()=>addT(starters[+x.dataset.s]));
@@ -1268,7 +1309,7 @@ REND.progress=b=>{
   };
   draw();
 };
-REND.inspect=b=>{b.innerHTML='<label class="fl"><span>ผลการตรวจงานของผู้ควบคุมงาน / ข้อสังเกต — ขึ้นต้นบรรทัดด้วย “-” เพื่อทำเป็นข้อย่อย</span><textarea rows="3" data-b="inspect" placeholder="เช่น&#10;- ตรวจแล้วเป็นไปตามแบบ&#10;- ให้แก้ไขรอยต่อผนังชั้น 3"></textarea></label>';bind(b,R());growAll(b)};
+REND.inspect=b=>{b.innerHTML='<label class="fl"><span>ผลการตรวจงานของผู้ควบคุมงาน / ข้อสังเกต — ขึ้นต้นบรรทัดด้วย “-” เพื่อทำเป็นข้อย่อย</span><textarea rows="3" data-b="inspect" placeholder="เช่น&#10;- ตรวจแล้วเป็นไปตามแบบ&#10;- ให้แก้ไขรอยต่อผนังชั้น 3"></textarea></label>';bind(b,R());growAll(b);ocrTextBtn(b,'inspect','ผลการตรวจงาน / ข้อสังเกต')};
 REND.issues=b=>{
   const r=R(), p=PR(); if(dzApply(r)) save();
   const ds=Object.values(app.disasters||{}), on=ds.filter(d=>dzMatch(d,p,r.date).ok), need=ds.filter(d=>{const m=dzMatch(d,p,r.date);return !m.ok&&m.needMoo});
@@ -1276,12 +1317,12 @@ REND.issues=b=>{
   on.forEach(d=>{const off=r.dzOff&&r.dzOff[d.id];top+='<div class="wxs warn">'+ico('alert')+'<span><b>อยู่ในเขตประกาศภัยพิบัติ ('+esc(dzType(d))+')</b><br><small>'+esc(dzAreaTxt(d))+' · '+thDate(d.start,false)+(d.end?' – '+thDate(d.end,false):' – จนกว่าจะยกเลิก')+(off?' · ผู้ใช้ลบข้อความออกจากรายงานนี้':' · ใส่ข้อความด้านล่างให้แล้ว')+'</small></span>'+(off?'<button type="button" class="btn line sm dz-back" data-id="'+esc(d.id)+'">ใส่ข้อความอีกครั้ง</button>':'')+'</div>'});
   need.forEach(d=>{top+='<div class="wxs">'+ico('pin')+'<span>มีประกาศภัยพิบัติใน ต.'+esc(stripPre(p.tambon,/^\s*(ต\.|ตำบล|แขวง)\s*/))+' เฉพาะบางหมู่ — ระบุ <b>หมู่ที่</b> ของโครงการ เพื่อให้แอปตรวจได้</span></div>'});
   b.innerHTML=top+'<label class="fl"><span>ปัญหาและอุปสรรคที่พบ — ขึ้นต้นบรรทัดด้วย “-” เพื่อทำเป็นข้อย่อย</span><textarea rows="3" data-b="issues" placeholder="เช่น&#10;- วัสดุส่งล่าช้า&#10;- ฝนตกทำให้งานภายนอกหยุด"></textarea></label>'+
-    '<button type="button" class="btn ghost sm" id="dzOpen">'+ico('alert')+'ประกาศภัยพิบัติ'+(ds.filter(dzActive).length?' ('+ds.filter(dzActive).length+' มีผลอยู่)':'')+'</button>';
+    '<div class="acts2" style="margin-top:0"><button type="button" class="btn ghost sm" id="dzOpen">'+ico('alert')+'ประกาศภัยพิบัติ'+(ds.filter(dzActive).length?' ('+ds.filter(dzActive).length+' มีผลอยู่)':'')+'</button><button type="button" class="btn ghost sm" id="isScan">'+ico('scan')+'อ่านข้อความจากภาพ</button></div>';
   bind(b,r); growAll(b);
-  b.querySelector('#dzOpen').onclick=openDisasters;
+  b.querySelector('#dzOpen').onclick=openDisasters; b.querySelector('#isScan').onclick=()=>openTextScan('issues','ปัญหาและอุปสรรค');
   b.querySelectorAll('.dz-back').forEach(x=>x.onclick=()=>{if(r.dzOff)delete r.dzOff[x.dataset.id];dzApply(r);save();rerender('issues')});
 };
-REND.nextplan=b=>{b.innerHTML='<label class="fl"><span>แผนงานวันถัดไป — ขึ้นต้นบรรทัดด้วย “-” เพื่อทำเป็นข้อย่อย</span><textarea rows="3" data-b="nextplan" placeholder="เช่น&#10;- ติดตั้งฝ้าเพดานโซน B"></textarea></label>';bind(b,R());growAll(b)};
+REND.nextplan=b=>{b.innerHTML='<label class="fl"><span>แผนงานวันถัดไป — ขึ้นต้นบรรทัดด้วย “-” เพื่อทำเป็นข้อย่อย</span><textarea rows="3" data-b="nextplan" placeholder="เช่น&#10;- ติดตั้งฝ้าเพดานโซน B"></textarea></label>';bind(b,R());growAll(b);ocrTextBtn(b,'nextplan','แผนงานวันถัดไป')};
 
 /* --- ภาพประกอบ --- */
 REND.photos=b=>{
@@ -1554,6 +1595,8 @@ const boqSum=b=>b.items.reduce((s,i)=>s+itemVal(b,i),0);
 function progOf(r){if(!r.boqProg)r.boqProg={};return r.boqProg}
 const prevOf=r=>projReports(r.projectId).filter(x=>x.date<r.date).pop()||null;
 const clampP=v=>Math.max(0,Math.min(100,num(v)));
+const iqty=i=>i&&num(i.qty)>0?num(i.qty):0; // ปริมาณตามสัญญาของรายการ (0 = ไม่ได้ระบุ → กรอกผลงานเป็น % อย่างเดียว)
+const qfmt=n=>fmtN(n,2).replace(/\.00$/,'');
 function boqActual(b,prog){const t=boqSum(b);if(!t)return null;return b.items.reduce((s,i)=>s+itemVal(b,i)*clampP(prog[i.id])/100,0)/t*100}
 function itemPlan(i,pr,date){
   const s=parseD(i.start)||parseD(pr.start); let e=parseD(i.end);
@@ -1609,15 +1652,16 @@ function parseLines(text){
     const line=raw.replace(/[๐-๙]/g,c=>TH_D.indexOf(c)).replace(/[|¦]/g,' ').trim(); if(!line) return;
     const tk=line.split(/\s+/); let no='';
     if(tk.length>1&&/^\d{1,3}(\.\d{1,2})*[.)]?$/.test(tk[0])) no=tk.shift().replace(/[.)]$/,'');
-    let amt=NaN,popped=0;
+    let amt=NaN,popped=0; const pops=[];
     while(tk.length){
       const t=tk[tk.length-1], n=parseAmt(t);
-      if(!isNaN(n)){if(isNaN(amt))amt=n;tk.pop();popped++;continue}
-      if(popped>0&&UNIT_RE.test(t)){tk.pop();continue}
+      if(!isNaN(n)){if(isNaN(amt))amt=n;pops.push(tk.pop());popped++;continue}
+      if(popped>0&&UNIT_RE.test(t)){pops.push(tk.pop());continue}
       break;
     }
+    const ui=pops.findIndex(t=>isNaN(parseAmt(t))&&!/^[-–—%]$/.test(t)), qu=ui>=0&&ui+1<pops.length?qtyUnit(pops[ui+1],pops[ui]):{q:'',u:''};
     const name=tk.join(' ').replace(/\s+/g,' ').trim(); if(!name) return;
-    if(!isNaN(amt)&&amt>0) out.push({no,name,amount:amt,grp,kind:/ครุภัณฑ์/.test(grp+' '+name)?'equip':'con',inc:!isTotalRow(name)});
+    if(!isNaN(amt)&&amt>0) out.push({no,name,amount:amt,qty:qu.q,unit:qu.u,grp,kind:/ครุภัณฑ์/.test(grp+' '+name)?'equip':'con',inc:!isTotalRow(name)});
     else if(name.length>=3&&!/^[\d\s.,]+$/.test(name)) grp=name.replace(/^[\d.]+\s*/,'');
   });
   flagGrand(out); return out;
@@ -1627,28 +1671,42 @@ function detectMap(rows){
   const cell=(r,c)=>String((rows[r]||[])[c]==null?'':(rows[r]||[])[c]);
   const maxC=Math.max(1,...rows.slice(0,80).map(r=>(r||[]).length));
   let hr=-1;
-  for(let i=0;i<Math.min(rows.length,50);i++){const t=(rows[i]||[]).join('|');if(/รายการ/.test(t)&&/(รวม|จำนวนเงิน|เงิน)/.test(t)){hr=i;break}}
+  for(let i=0;i<Math.min(rows.length,50);i++){const t=(rows[i]||[]).join('|');if(/รายการ/.test(t)&&/(รวม|จำนวนเงิน|เงิน|ต้นทุน)/.test(t)){hr=i;break}}
   if(hr<0) for(let i=0;i<Math.min(rows.length,50);i++){if(/รายการ/.test((rows[i]||[]).join('|'))){hr=i;break}}
   const hdr=c=>{let t=cell(Math.max(hr,0),c);if(hr>=0){const n=(rows[hr+1]||[]);if(n.length&&!n.some(x=>!isNaN(parseAmt(x))&&String(x).trim()!==''))t+=' '+cell(hr+1,c)}return t};
   let nameC=-1,noC=-1,amtC=-1;
-  for(let c=0;c<maxC;c++){const h=hdr(c);if(nameC<0&&/รายการ/.test(h))nameC=c;if(noC<0&&/ลำดับ|^\s*ที่\s*$/.test(h))noC=c}
+  let qtyC=-1,unitC=-1;
+  for(let c=0;c<maxC;c++){const h=hdr(c);if(nameC<0&&/รายการ/.test(h))nameC=c;if(noC<0&&/ลำดับ|^\s*ที่\s*$/.test(h))noC=c;if(qtyC<0&&/^\s*(จำนวน|ปริมาณ(?:งาน)?)\s*$/.test(h))qtyC=c;if(unitC<0&&/^\s*หน่วย(?:นับ)?\s*$/.test(h))unitC=c}
   for(let c=0;c<maxC;c++){if(/รวมค่าวัสดุและ(แรงงาน|ค่าแรง)|รวมค่าวัสดุและค่าแรง/.test(hdr(c))){amtC=c;break}}
+  if(amtC<0) for(let c=0;c<maxC;c++){if(/ค่างาน\s*ต้นทุน/.test(hdr(c))){amtC=c;break}}
   if(amtC<0) for(let c=maxC-1;c>=0;c--){if(/รวมเป็นเงิน|รวมเงิน|จำนวนเงินรวม|^\s*รวม\s*$/.test(hdr(c))){amtC=c;break}}
   if(nameC<0) nameC=Math.min(1,maxC-1);
   if(amtC<0){
     let best=-1,bs=-1;
-    for(let c=nameC+1;c<maxC;c++){let s=0,n=0;for(let r=Math.max(hr+1,0);r<rows.length;r++){const v=parseAmt((rows[r]||[])[c]);if(!isNaN(v)&&v>0){s+=v;n++}}if(n>=2&&s>bs){bs=s;best=c}}
+    for(let c=nameC+1;c<maxC;c++){let s=0,n=0;for(let r=Math.max(hr+1,0);r<rows.length;r++){const v=amtOf((rows[r]||[])[c]);if(!isNaN(v)&&v>0){s+=v;n++}}if(n>=2&&s>bs){bs=s;best=c}}
     amtC=best>=0?best:maxC-1;
   }
-  return {hr,name:nameC,amt:amtC,no:noC,maxC};
+  if(qtyC<0&&unitC>nameC+1&&unitC-1!==amtC) qtyC=unitC-1;
+  return {hr,name:nameC,amt:amtC,no:noC,qty:qtyC,unit:unitC,maxC};
 }
-function parseTable(rows,map){
-  const out=[]; let grp='';
+/* ปริมาณ + หน่วย จากช่องตาราง (รองรับ "120.00 ตร.ม." ในช่องเดียว) */
+function qtyUnit(qv,uv){
+  let q=typeof qv==='number'?qv:NaN, u=String(uv==null?'':uv).trim();
+  if(isNaN(q)){const tk=String(qv==null?'':qv).trim().split(/\s+/);tk.forEach(t=>{const n=parseAmt(t);if(isNaN(q)&&!isNaN(n))q=n;else if(!u&&isNaN(n)&&UNIT_RE.test(t)&&!/^[-–—%]$/.test(t))u=t})}
+  if(!/[ก-๙A-Za-z]/.test(u)) u='';
+  return {q:q>0?String(Math.round(q*1e4)/1e4):'',u:q>0?u:''};
+}
+const amtOf=v=>{const n=parseAmt(v);if(!isNaN(n)||typeof v!=='string')return n;const t=v.trim().split(/\s+/).map(parseAmt).filter(x=>!isNaN(x));return t.length?t[t.length-1]:NaN};
+function parseTable(rows,map,opt){
+  const out=[], wrap=!!(opt&&opt.wrap); let grp='', lastR=-9;
   for(let r=map.hr+1;r<rows.length;r++){
-    const row=rows[r]||[], nm=String(row[map.name]==null?'':row[map.name]).replace(/\s+/g,' ').trim();
-    const amt=parseAmt(row[map.amt]), no=map.no>=0&&row[map.no]!=null?String(row[map.no]).trim():'';
+    const row=rows[r]||[];
+    let nm=String(row[map.name]==null?'':row[map.name]).replace(/\s+/g,' ').trim();
+    const amt=amtOf(row[map.amt]); let no=map.no>=0&&row[map.no]!=null?String(row[map.no]).trim():'';
+    if(wrap&&!no){const m=nm.match(/^(\d{1,3}(?:\.\d{1,3}){0,3})[.)]?\s+(.+)$/);if(m){no=m[1];nm=m[2]}}
     if(!nm&&isNaN(amt)) continue;
-    if(!isNaN(amt)&&amt>0) out.push({no,name:nm||('รายการที่ '+(no||out.length+1)),amount:amt,grp,kind:/ครุภัณฑ์/.test(grp+' '+nm)?'equip':'con',inc:!isTotalRow(nm)});
+    if(!isNaN(amt)&&amt>0){const qu=qtyUnit(map.qty>=0?row[map.qty]:'',map.unit>=0?row[map.unit]:'');out.push({no,name:nm||('รายการที่ '+(no||out.length+1)),amount:amt,qty:qu.q,unit:qu.u,grp,kind:/ครุภัณฑ์/.test(grp+' '+nm)?'equip':'con',inc:!isTotalRow(nm)});lastR=r}
+    else if(wrap&&nm&&!no&&lastR===r-1&&out.length&&out[out.length-1].no&&!isTotalRow(nm)&&!/^(หมวด|งาน|ส่วนที่|ครุภัณฑ์|รวม)/.test(nm)){out[out.length-1].name+=' '+nm;lastR=r}
     else if(nm&&nm.length>=2&&!isTotalRow(nm)&&!/^[\d\s.,]+$/.test(nm)) grp=nm.replace(/^[\d.]+\s*/,'');
   }
   flagGrand(out); return out;
@@ -1659,7 +1717,7 @@ function linesFromPdfItems(items){
   return Object.keys(rows).map(Number).sort((a,b)=>b-a).map(y=>rows[y].sort((a,b)=>a.x-b.x).map(o=>o.s).join(' ')).join('\n');
 }
 
-/* ---- ตัวโหลดไลบรารี (โหลดเมื่อต้องใช้เท่านั้น ต้องมีอินเทอร์เน็ต) ---- */
+/* ---- ตัวโหลดไลบรารี (โหลดเมื่อต้องใช้เท่านั้น — แอป APK/EXE ใช้ไฟล์ในเครื่อง) ---- */
 const _ld={};
 function loadScript(url){
   if(_ld[url]) return _ld[url];
@@ -1676,24 +1734,370 @@ async function prepCanvas(src,rot){
   const k=hi>lo?255/(hi-lo):1; for(let i=0;i<p.length;i+=4){const v=Math.max(0,Math.min(255,(p[i]-lo)*k));p[i]=p[i+1]=p[i+2]=v}
   x.putImageData(d,0,0); return c;
 }
-async function ocrCanvas(c,onP){
-  await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
-  const r=await Tesseract.recognize(c,'tha+eng',{logger:m=>{if(m.status==='recognizing text'&&onP)onP(m.progress)}});
-  return r.data.text;
-}
-async function readPdf(file,onP){
-  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
-  pdfjsLib.GlobalWorkerOptions.workerSrc=URL.createObjectURL(new Blob(['importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'],{type:'text/javascript'}));
-  const doc=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise, texts=[], canvases=[];
-  const n=Math.min(doc.numPages,30);
-  for(let p=1;p<=n;p++){
-    if(onP)onP(p,n); const page=await doc.getPage(p);
-    texts.push(linesFromPdfItems((await page.getTextContent()).items));
-    const vp=page.getViewport({scale:2}), c=document.createElement('canvas'); c.width=vp.width;c.height=vp.height;
-    await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise; canvases.push(c);
+/* ============ OCR ภาษาไทย — OpenThai 2.1 OCR Text (ไลบรารี thai-ocr-web) ============
+   - แอป APK / EXE: ตัวอ่าน + โมเดลอยู่ในโฟลเดอร์ ocr/ ของแอป (build-www.mjs ใส่ OCR_LOCAL='ocr/') → ใช้ออฟไลน์ได้
+   - ไฟล์ .html เดี่ยว: โหลดจาก cdn.jsdelivr.net ครั้งแรก (ต้องมีอินเทอร์เน็ต) แล้วเบราว์เซอร์เก็บไว้ใช้ครั้งต่อไป
+   - อ่านใน Web Worker (หน้าจอไม่ค้าง) · ภาพไม่ถูกส่งออกนอกเครื่อง · โหลดตัวอ่านไม่ได้ → ใช้ Tesseract แทน
+   - ผลอ่านทุกหน้า: {text, lines:[{text,row,box}], w, h, src:'ocr'|'pdf-text', thumb} → ตัวแยกข้อมูลของแต่ละฟอร์ม */
+const OCR_LOCAL='';
+const OCR_CDN={lib:'https://cdn.jsdelivr.net/npm/thai-ocr-web@0.2.0/',ort:'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/',clip:'https://cdn.jsdelivr.net/npm/clipper-lib@6.4.2/+esm'};
+
+/* ตัวอ่านหลัก — โค้ดชุดนี้ถูกคัดลอกไปรันใน Worker ด้วย (ห้ามอ้างตัวแปรภายนอกฟังก์ชัน) */
+async function ocrCore(c){
+  const L=c.local||'';
+  const imp=async list=>{let err;for(const u of list){if(!u)continue;try{return [await import(u),u]}catch(e){err=e}}throw err||new Error('ไม่พบไฟล์ตัวอ่าน')};
+  if(c.mem&&globalThis.WebAssembly&&WebAssembly.Memory&&!WebAssembly.Memory.__cap){ // จำกัดหน่วยความจำ WASM บนมือถือ
+    const O=WebAssembly.Memory, maxP=Math.floor(c.mem*16);
+    const M=function(d){if(d&&d.shared&&(d.maximum===undefined||d.maximum>maxP))d=Object.assign({},d,{maximum:Math.max(maxP,d.initial||0)});return new O(d)};
+    M.prototype=O.prototype; M.__cap=1; WebAssembly.Memory=M;
   }
-  return {texts,canvases};
+  const [om,ou]=await imp([L&&L+'ort/ort.wasm.min.js',c.cdn.ort+'ort.wasm.min.mjs']);
+  const ort=om.InferenceSession?om:om.default;
+  const ob=ou.slice(0,ou.lastIndexOf('/')+1), ortLocal=!!(L&&ou.startsWith(L));
+  ort.env.wasm.numThreads=1; ort.env.wasm.proxy=false;
+  if(ortLocal){
+    ort.env.wasm.wasmPaths={mjs:ob+'ort-wasm-simd-threaded.js',wasm:ob+'ort-wasm-simd-threaded.wasm'};
+    try{const r=await fetch(ob+'ort-wasm-simd-threaded.wasm');if(r.ok)ort.env.wasm.wasmBinary=await r.arrayBuffer()}catch(e){}
+  }else ort.env.wasm.wasmPaths=ob;
+  const [cm]=await imp([L&&L+'opencv-ocr.js',c.cdn.lib+'vendor/opencv/opencv-ocr.mjs']);
+  const cv=await cm.default();
+  const [km]=await imp([L&&L+'clipper.js',c.cdn.clip]);
+  const ClipperLib=km.default&&km.default.Clipper?km.default:(km.Clipper?km:km.default);
+  const [lm,lu]=await imp([L&&L+'line-ocr.js',c.cdn.lib+'src/line-ocr.js']);
+  let cache=null; try{if(globalThis.caches&&c.cacheName)cache=await caches.open(c.cacheName)}catch(e){}
+  const loadFile=async n=>{
+    let err;
+    for(const u of [L&&L+'models/'+n,c.cdn.lib+'models/'+n]){
+      if(!u)continue;
+      try{
+        const net=u.startsWith(c.cdn.lib); let r=net&&cache?await cache.match(u):null;
+        if(!r){r=await fetch(u);if(!r.ok)throw new Error(n+' ('+r.status+')');if(net&&cache)try{await cache.put(u,r.clone())}catch(e){}}
+        return new Uint8Array(await r.arrayBuffer());
+      }catch(e){err=e}
+    }
+    throw err;
+  };
+  const eng=await lm.LineOCR.create({ort,cv,ClipperLib,loadFile,executionProviders:['wasm']});
+  return {read:img=>eng.read(img),src:(L&&lu.startsWith(L))?'local':'cdn'};
 }
+function ocrWorkerWrap(core){
+  let eng=null;
+  self.onmessage=async e=>{
+    const m=e.data;
+    try{
+      if(m.t==='init'){eng=eng||core(m.c);const x=await eng;postMessage({id:m.id,ok:1,src:x.src})}
+      else{const x=await eng;const r=await x.read(m.img);postMessage({id:m.id,ok:1,r:{text:r.text,lines:r.lines,rotation:r.rotation}})}
+    }catch(err){if(m.t==='init')eng=null;postMessage({id:m.id,ok:0,err:String(err&&(err.message||err.name)||err||'error')})}
+  };
+}
+const OCRE={p:null,w:null,main:null,seq:0,cb:{},kind:'',src:'',err:''};
+const ocrCfg=()=>{const ua=navigator.userAgent;return {local:OCR_LOCAL?new URL(OCR_LOCAL,location.href).href:'',cdn:OCR_CDN,cacheName:'thai-ocr-web-0.2.0',mem:/iPhone|iPad|iPod/.test(ua)?512:/Android|Mobile/.test(ua)?1024:0}};
+const withTO=(p,ms,msg)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error(msg||'หมดเวลา')),ms))]);
+function ocrCall(m){return new Promise((res,rej)=>{const id=++OCRE.seq;OCRE.cb[id]={res,rej};OCRE.w.postMessage(Object.assign({},m,{id}))})}
+function ocrInit(onSt){
+  if(OCRE.p&&OCRE.kind==='tess'){OCRE.p=null} // ครั้งก่อนใช้ตัวสำรอง → ลองตัวหลักใหม่
+  if(OCRE.p) return OCRE.p;
+  return OCRE.p=(async()=>{
+    const c=ocrCfg(); let workerRan=false;
+    if(onSt) onSt('กำลังเตรียมตัวอ่านภาษาไทย (ครั้งแรกอาจใช้เวลาสักครู่)…');
+    try{
+      const src=ocrCore.toString()+'\n('+ocrWorkerWrap.toString()+')(ocrCore);';
+      const w=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})),{type:'module'});
+      w.onmessage=e=>{const m=e.data,k=OCRE.cb[m.id];if(!k)return;delete OCRE.cb[m.id];workerRan=true;m.ok?k.res(m):k.rej(new Error(m.err))};
+      w.onerror=e=>{const er=new Error(e&&e.message||'worker');Object.values(OCRE.cb).forEach(k=>k.rej(er));OCRE.cb={}};
+      OCRE.w=w;
+      const r=await withTO(ocrCall({t:'init',c}),300000,'โหลดตัวอ่านนานเกินไป');
+      OCRE.kind='thai'; OCRE.src=r.src; return 'thai';
+    }catch(e){console.warn('OCR worker:',e);OCRE.err=String(e&&e.message||e);if(OCRE.w){OCRE.w.terminate();OCRE.w=null}}
+    if(!workerRan){ // Worker ใช้ไม่ได้ในเครื่องนี้ → อ่านในหน้าหลัก
+      try{OCRE.main=await withTO(ocrCore(c),300000,'โหลดตัวอ่านนานเกินไป');OCRE.kind='thai';OCRE.src=OCRE.main.src;return 'thai'}
+      catch(e){console.warn('OCR main:',e);OCRE.err=String(e&&e.message||e)}
+    }
+    OCRE.kind='tess'; return 'tess';
+  })();
+}
+const ocrEngName=()=>OCRE.kind==='thai'?'OpenThai OCR'+(OCRE.src==='cdn'?' (โหลดจากเว็บ)':''):OCRE.kind==='tess'?'Tesseract (ตัวอ่านสำรอง ความแม่นยำต่ำกว่า)':'OpenThai OCR';
+/* เตรียมภาพ: ย่อ/ขยายให้ด้านยาว ~1400–2400 px พื้นขาว หมุนตามที่เลือก (ตัวอ่านหมุน 90/180° และแก้เอียงเองได้อีกชั้น) */
+function ocrCanvas(src,rot){
+  const w0=src.naturalWidth||src.width, h0=src.naturalHeight||src.height, swap=rot%180!==0, mx=Math.max(w0,h0)||1;
+  const sc=mx>2400?2400/mx:mx<1400?Math.min(2.5,1400/mx):1;
+  let W=Math.round((swap?h0:w0)*sc), H=Math.round((swap?w0:h0)*sc);
+  const c=document.createElement('canvas'); c.width=W; c.height=H; const x=c.getContext('2d',{willReadFrequently:true});
+  x.fillStyle='#fff'; x.fillRect(0,0,W,H); x.translate(W/2,H/2); x.rotate(rot*Math.PI/180);
+  const dw=swap?H:W, dh=swap?W:H; x.drawImage(src,-dw/2,-dh/2,dw,dh); x.setTransform(1,0,0,1,0,0);
+  return c;
+}
+function ocrThumb(c){const s=Math.min(1,520/Math.max(c.width,c.height)),t=document.createElement('canvas');t.width=Math.round(c.width*s);t.height=Math.round(c.height*s);const x=t.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,t.width,t.height);x.drawImage(c,0,0,t.width,t.height);return t.toDataURL('image/jpeg',0.7)}
+async function ocrImage(c,onSt){
+  const k=await ocrInit(onSt);
+  if(k==='thai'){
+    const img=c.getContext('2d',{willReadFrequently:true}).getImageData(0,0,c.width,c.height);
+    try{
+      const r=OCRE.w?(await ocrCall({t:'read',img})).r:await OCRE.main.read(img);
+      return {text:r.text||'',lines:r.lines||[],w:c.width,h:c.height,src:'ocr'};
+    }catch(e){console.warn('OCR read:',e);OCRE.kind='tess';OCRE.err=String(e&&e.message||e)}
+  }
+  return tessRead(c,onSt);
+}
+async function tessRead(c,onSt){
+  await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+  const g=await prepCanvas(c,0);
+  const r=await Tesseract.recognize(g,'tha+eng',{logger:m=>{if(m.status==='recognizing text'&&onSt)onSt('Tesseract '+Math.round(m.progress*100)+'%')}});
+  const k=c.width/g.width, lines=[];
+  (r.data.lines||[]).forEach((ln,ri)=>{
+    const ws=(ln.words||[]).filter(w=>String(w.text||'').trim()); if(!ws.length) return;
+    const hs=ws.map(w=>w.bbox.y1-w.bbox.y0).sort((a,b)=>a-b), hm=hs[hs.length>>1]||10; let cur=null;
+    const put=()=>{if(cur)lines.push({text:cur.t,row:ri,box:[[cur.x0*k,cur.y0*k],[cur.x1*k,cur.y0*k],[cur.x1*k,cur.y1*k],[cur.x0*k,cur.y1*k]]})};
+    ws.forEach(w=>{const b=w.bbox;if(cur&&b.x0-cur.x1<1.2*hm){cur.t+=' '+w.text;cur.x1=b.x1;cur.y0=Math.min(cur.y0,b.y0);cur.y1=Math.max(cur.y1,b.y1)}else{put();cur={t:w.text,x0:b.x0,x1:b.x1,y0:b.y0,y1:b.y1}}});
+    put();
+  });
+  return {text:r.data.text||'',lines,w:c.width,h:c.height,src:'ocr'};
+}
+/* ---- PDF: หน้าที่มีข้อความในไฟล์อยู่แล้ว (ส่งออกจาก Word/Excel) ใช้ข้อความนั้นเลย · หน้าสแกน/ข้อความไทยเพี้ยน → OCR ---- */
+async function pdfLib(){
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+  if(!pdfLib.ok){pdfjsLib.GlobalWorkerOptions.workerSrc=URL.createObjectURL(new Blob(['importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'],{type:'text/javascript'}));pdfLib.ok=1}
+  return pdfjsLib;
+}
+function pdfBroken(t){ // สัดส่วนอักษรที่เพี้ยน (ฟอนต์ไทยบางแบบแปลงเป็นข้อความไม่ได้)
+  const ch=[...String(t).replace(/\s/g,'')]; if(!ch.length) return 1;
+  const bad=ch.filter(c=>c==='\u0000'||c==='�'||(c>=''&&c<='')).length, th=ch.filter(c=>c>='ก'&&c<='๛').length;
+  const wedged=th?((t.match(/[ก-๎](?=[^฀-๿\s0-9.,;:()\[\]\-\/'"%&+*!?…–—“”‘’·•][ก-๎])/g)||[]).length+(t.match(/[ฃฅ]/g)||[]).length)*5/th:0;
+  const lone=th?(t.match(/(^|[^ก-ฮะ-ฺเ-๎])[ัิ-ฺ็-๎]/g)||[]).length*3/th:0;
+  return Math.max(bad/ch.length,wedged,lone);
+}
+function pdfLines(items,vpH){
+  const its=items.filter(it=>it.str&&it.str.trim()).map(it=>{const t=it.transform,h=Math.hypot(t[2],t[3])||Math.abs(t[3])||10;return {s:it.str,x0:t[4],x1:t[4]+(it.width||h*it.str.length*0.5),y:vpH-t[5]-h*0.4,h}});
+  its.sort((a,b)=>a.y-b.y||a.x0-b.x0);
+  const rows=[];
+  its.forEach(it=>{const r=rows.find(r=>Math.abs(r.y-it.y)<=0.5*Math.min(r.h,it.h));if(r)r.its.push(it);else rows.push({y:it.y,h:it.h,its:[it]})});
+  rows.sort((a,b)=>a.y-b.y);
+  const lines=[], texts=[];
+  rows.forEach((r,ri)=>{
+    r.its.sort((a,b)=>a.x0-b.x0); const cells=[];
+    r.its.forEach(it=>{const c=cells[cells.length-1],gap=c?it.x0-c.x1:1e9;if(c&&gap<0.6*it.h){c.s+=(gap>0.2*it.h?' ':'')+it.s;c.x1=Math.max(c.x1,it.x1)}else cells.push({s:it.s,x0:it.x0,x1:it.x1})});
+    cells.forEach(c=>{const s=c.s.replace(/\s+/g,' ').trim();if(s)lines.push({text:s,row:ri,box:[[c.x0,r.y-r.h/2],[c.x1,r.y-r.h/2],[c.x1,r.y+r.h/2],[c.x0,r.y+r.h/2]]})});
+    texts.push(cells.map(c=>c.s.trim()).filter(Boolean).join(' '));
+  });
+  return {text:texts.filter(Boolean).join('\n'),lines};
+}
+/* อ่านไฟล์ภาพ/PDF หลายไฟล์ → หน้า[] */
+async function ocrFiles(files,rot,onSt){
+  const pages=[], st=t=>{if(onSt)onSt(t)};
+  for(let k=0;k<files.length;k++){
+    const f=files[k], tag=files.length>1?'ไฟล์ '+(k+1)+'/'+files.length+': ':'';
+    if(/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name||'')){
+      st(tag+'กำลังเปิด PDF…');
+      const lib=await pdfLib(), doc=await lib.getDocument({data:await f.arrayBuffer()}).promise, n=Math.min(doc.numPages,30);
+      for(let p=1;p<=n;p++){
+        const page=await doc.getPage(p), vp1=page.getViewport({scale:1});
+        const tc=pdfLines((await page.getTextContent()).items,vp1.height);
+        const sc=Math.min(4,2200/Math.max(vp1.width,vp1.height)), vp=page.getViewport({scale:sc});
+        const c=document.createElement('canvas'); c.width=Math.round(vp.width); c.height=Math.round(vp.height);
+        const x=c.getContext('2d',{willReadFrequently:true}); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height);
+        await page.render({canvasContext:x,viewport:vp}).promise;
+        if(tc.text.replace(/\s/g,'').length>=30&&pdfBroken(tc.text)<=0.12){
+          pages.push({text:tc.text,lines:tc.lines,w:vp1.width,h:vp1.height,src:'pdf-text',thumb:ocrThumb(c)});
+          st(tag+'หน้า '+p+'/'+n+' ใช้ข้อความในไฟล์ PDF');
+        }else{
+          const cv=rot?ocrCanvas(c,rot):c; st(tag+'อ่านหน้า '+p+'/'+n+'…');
+          const r=await ocrImage(cv,t=>st(tag+'หน้า '+p+'/'+n+': '+t)); r.thumb=ocrThumb(cv); pages.push(r);
+        }
+        page.cleanup();
+      }
+      try{await doc.destroy()}catch(e){}
+    }else{
+      st(tag+'กำลังเตรียมภาพ…');
+      const im=await loadImg(f), c=ocrCanvas(im,rot);
+      st(tag+'กำลังอ่านตัวอักษร…');
+      const r=await ocrImage(c,t=>st(tag+t)); r.thumb=ocrThumb(c); pages.push(r);
+    }
+  }
+  return pages;
+}
+const ocrText=pages=>pages.map(p=>p.text||'').join('\n').replace(/\n{3,}/g,'\n\n').trim();
+
+/* ---- จัดผลอ่านเป็นตาราง (แถว × คอลัมน์) จากตำแหน่งข้อความ ใช้กับ ปร.4 / ปร.5 / ใบส่งของ / ตารางพื้นที่ภัยพิบัติ ---- */
+function ocrCells(pg){
+  const L=(pg.lines||[]).filter(l=>l&&l.box&&String(l.text||'').trim());
+  let ux=0,uy=0; L.forEach(l=>{const a=l.box[0],b=l.box[1],d=Math.hypot(b[0]-a[0],b[1]-a[1])||1;ux+=(b[0]-a[0])/d;uy+=(b[1]-a[1])/d});
+  const an=L.length?Math.atan2(uy,ux):0, co=Math.cos(-an), si=Math.sin(-an); // หมุนกลับให้แนวข้อความเป็นแนวนอน
+  const by={};
+  L.forEach(l=>{
+    const ps=l.box.map(([x,y])=>[x*co-y*si,x*si+y*co]), xs=ps.map(p=>p[0]), ys=ps.map(p=>p[1]);
+    const c={t:String(l.text).replace(/\s+/g,' ').trim(),x0:Math.min(...xs),x1:Math.max(...xs),y:(Math.min(...ys)+Math.max(...ys))/2,h:Math.max(...ys)-Math.min(...ys)};
+    (by[l.row]=by[l.row]||[]).push(c);
+  });
+  return Object.keys(by).map(Number).sort((a,b)=>a-b).map(k=>{
+    const out=[];
+    by[k].sort((a,b)=>a.x0-b.x0).forEach(c=>{ // แยกช่องตัวเลขที่ติดกัน เช่น "12.00 ตร.ม. 350.00"
+      const tk=c.t.split(' ');
+      if(tk.length>1&&tk.some(t=>!isNaN(parseAmt(t)))&&tk.every(t=>!isNaN(parseAmt(t))||UNIT_RE.test(t))){
+        let pos=0; const n=c.t.length||1;
+        tk.forEach(t=>{const s=c.t.indexOf(t,pos);out.push({t,x0:c.x0+(c.x1-c.x0)*s/n,x1:c.x0+(c.x1-c.x0)*(s+t.length)/n,y:c.y,h:c.h});pos=s+t.length});
+      }else out.push(c);
+    });
+    return out;
+  });
+}
+function ocrGrid(pages){
+  const rows=[];
+  pages.forEach(pg=>{
+    const rs=ocrCells(pg), multi=rs.filter(r=>r.length>=2), base=multi.length?multi:rs; let e0=Infinity,e1=-Infinity;
+    base.forEach(r=>r.forEach(c=>{e0=Math.min(e0,c.x0);e1=Math.max(e1,c.x1)}));
+    const W=Math.max(1,e1-e0); rs.forEach(r=>rows.push(r.map(c=>({t:c.t,a:(c.x0-e0)/W,b:(c.x1-e0)/W}))));
+  });
+  const N=400, cov=new Array(N).fill(0); let R=0;
+  rows.forEach(r=>{if(r.length<2)return;R++;r.forEach(c=>{if(c.b-c.a>0.45)return;const i0=Math.max(0,Math.floor(c.a*N)),i1=Math.min(N-1,Math.ceil(c.b*N)-1);for(let i=i0;i<=i1;i++)cov[i]++})});
+  const thr=R>=4?Math.max(2,Math.round(R*0.06)):1; let cols=[],cur=null;
+  for(let i=0;i<N;i++){if(cov[i]>=thr){if(cur)cur.b=(i+1)/N;else cur={a:i/N,b:(i+1)/N}}else if(cur){cols.push(cur);cur=null}}
+  if(cur) cols.push(cur); if(!cols.length) cols=[{a:0,b:1}];
+  return rows.map(r=>{
+    const g=new Array(cols.length).fill('');
+    r.forEach(c=>{
+      let best=0,bo=-1; cols.forEach((k,j)=>{const o=Math.min(c.b,k.b)-Math.max(c.a,k.a);if(o>bo){bo=o;best=j}});
+      if(bo<=0){const m=(c.a+c.b)/2;let bd=1e9;cols.forEach((k,j)=>{const d=Math.abs(m-(k.a+k.b)/2);if(d<bd){bd=d;best=j}})}
+      g[best]=g[best]?g[best]+' '+c.t:c.t;
+    });
+    return g;
+  }).filter(g=>g.some(v=>v));
+}
+const ocrRowTexts=pages=>pages.flatMap(pg=>(pg.lines||[]).length?ocrCells(pg).map(r=>r.map(c=>c.t).join(' ')):String(pg.text||'').split('\n'));
+
+/* ---- วันที่ภาษาไทย: "1 ตุลาคม 2568" "1 ต.ค. 68" "01/10/2568" ---- */
+const thNum=s=>String(s==null?'':s).replace(/[๐-๙]/g,c=>TH_D.indexOf(c));
+const MON_AB=TH_MON_S.map(m=>m.replace(/\./g,''));
+const MON_ALT=[...TH_MON,...[...MON_AB].sort((a,b)=>b.length-a.length).map(m=>m.split('').join('\\.?\\s?')+'\\.?')].join('|');
+const THDATE_RE=new RegExp('(\\d{1,2})\\s*(?:เดือน\\s*)?('+MON_ALT+')\\s*(?:พ\\.?\\s?ศ\\.?|ค\\.?\\s?ศ\\.?)?\\s*(\\d{4}|\\d{2})(?!\\d)','g');
+const monIdx=s=>{s=s.replace(/[.\s]/g,'');const i=TH_MON.indexOf(s);return i>=0?i:MON_AB.indexOf(s)};
+function toYmd(d,m,y){d=+d;y=+y;if(y<100)y+=2500;if(y>2400)y-=543;if(y<1990||y>2100||m<0||m>11||d<1||d>31)return '';const t=new Date(y,m,d);return t.getMonth()===m?ymd(t):''}
+function thDates(text){
+  const s=thNum(text), out=[]; let m;
+  THDATE_RE.lastIndex=0; while((m=THDATE_RE.exec(s))){const v=toYmd(m[1],monIdx(m[2]),m[3]);if(v)out.push({v,i:m.index,e:m.index+m[0].length})}
+  const re=/(?<![\d\/])(\d{1,2})\s*[\/.\-]\s*(\d{1,2})\s*[\/.\-]\s*(25\d{2}|20\d{2}|\d{2})(?![\d\/])/g;
+  while((m=re.exec(s))){const v=toYmd(m[1],+m[2]-1,m[3]);if(v&&!out.some(o=>m.index<o.e&&m.index+m[0].length>o.i))out.push({v,i:m.index,e:m.index+m[0].length})}
+  return out.sort((a,b)=>a.i-b.i);
+}
+function dateNear(text,re,gap){ // วันที่แรกที่อยู่ถัดจากคำนำ (ห่างไม่เกิน gap ตัวอักษร)
+  const s=thNum(text), ds=thDates(s); let m; re.lastIndex=0;
+  while((m=re.exec(s))){const e=m.index+m[0].length,d=ds.find(x=>x.i>=e&&x.i-e<=(gap||40));if(d)return d.v;if(!m[0].length)re.lastIndex++}
+  return '';
+}
+const flat=s=>thNum(s).replace(/[ \t]*\n[ \t]*/g,' ').replace(/[ \t]+/g,' ');
+const clip=(s,re)=>{s=String(s||'');const m=re&&s.match(re);return (m&&m.index>0?s.slice(0,m.index):s).replace(/^[\s:：\-–."“”']+|[\s:：,\-–"“”']+$/g,'').trim()};
+const TH_NAME='[ก-ฮเ-ไ][ก-๙]*?';
+function locParts(s){
+  s=thNum(s); const end='(?=\\s|,|\\(|\\)|$|\\d|หมู่|ม\\.|ต\\.|ตำบล|แขวง|อ\\.|อำเภอ|เขต|จ\\.|จังหวัด|รหัส)';
+  const g=re=>{const m=s.match(re);return m?m[1]:''};
+  return {moo:g(/(?:หมู่ที่|หมู่|ม\.)\s*(\d{1,3})(?!\d)/),tambon:g(new RegExp('(?:ต\\.|ตำบล|แขวง)\\s*('+TH_NAME+')'+end)),amphoe:g(new RegExp('(?:อ\\.|อำเภอ|เขต)\\s*('+TH_NAME+')'+end)),province:g(new RegExp('(?:จ\\.|จังหวัด)\\s*('+TH_NAME+')'+end))};
+}
+
+/* ---- ข้อมูลโครงการ: หน้าแรกสัญญา / ปร.4–ปร.5 / ใบสั่งจ้าง / หนังสือแจ้งเริ่มงาน ---- */
+const PJ_STOP=/\s(?:สถานที่(?:ก่อสร้าง|ดำเนินการ)|ผู้ว่าจ้าง|ผู้รับจ้าง|ส่วนราชการ|หน่วยงาน|เจ้าของโครงการ|เลขที่สัญญา|สัญญา(?:จ้าง)?\s*เลขที่|แบบเลขที่|แบบ\s*ปร\.|ประมาณราคา|ลงวันที่|ระยะเวลา|วงเงิน|ราคากลาง|แผ่นที่|หน้า\s*\d|ประเภท)/;
+function lineVal(T,re,stop,bad){
+  for(const ln of T.split('\n')){const m=ln.match(re);if(!m)continue;const v=clip(ln.slice(m.index+m[0].length),stop===undefined?PJ_STOP:stop);if(v.length>=2&&!(bad&&bad.test(v)))return v}
+  return '';
+}
+function parseProject(text){
+  const T=thNum(text), F=flat(text), o={};
+  o.name=lineVal(T,/^\s*(?:(?:ชื่อ\s*)?โครงการ(?:\s*\/\s*งาน)?|ชื่องาน)\s*[:：]?\s*/)||lineVal(T,/(?:ชื่อ\s*)?โครงการ\s*(?:\/\s*งาน)?\s*[:：]?\s*/,undefined,/^(?:นี้|ดังกล่าว|ที่|ตาม)/)||clip((F.match(/ตกลงรับจ้าง(?:ทำงาน)?\s*(.{6,160}?)\s*(?:ณ\s|ตามข้อกำหนด|ตามแบบ|ตามรายการ)/)||[])[1],/\s(?:ตำบล|ต\.)/);
+  const BAD=/^(?:ตกลง|จะ|ได้|ต้อง|มี|เป็น|และ|หรือ|ซึ่ง|ทำ|อีก|ฝ่าย|ผู้|ตาม|ดังกล่าว|นี้)/;
+  let m=F.match(/ระหว่าง\s*(.{3,100}?)\s*(?:โดย|ซึ่ง)[^]{0,300}?เรียกว่า\s*["“”']?\s*ผู้ว่าจ้าง/);
+  o.client=m?clip(m[1]):lineVal(T,/(?:ผู้ว่าจ้าง|ส่วนราชการ|หน่วยงานเจ้าของ(?:โครงการ)?|เจ้าของโครงการ|หน่วยงาน(?!ออกแบบ|ผู้ออกแบบ))\s*[:：]?\s*/,undefined,BAD);
+  m=F.match(/(?:^|\s)กับ\s*(.{3,100}?)\s*(?:ซึ่ง|โดย|สำนักงาน|ตั้งอยู่|เลขทะเบียน)[^]{0,400}?เรียกว่า\s*["“”']?\s*ผู้รับจ้าง/);
+  o.contractor=m?clip(m[1]):lineVal(T,/(?:ชื่อ)?ผู้รับจ้าง\s*[:：]?\s*/,undefined,BAD);
+  if(!o.contractor){const cs=[...new Set((F.match(/บริษัท\s*[^\s,]{2,40}(?:\s[^\s,]{1,20}){0,2}?\s*จำกัด(?:\s*\(มหาชน\))?|(?:ห้างหุ้นส่วนจำกัด|หจก\.)\s*[^\s,]{2,40}/g)||[]).map(x=>x.trim()))];if(cs.length===1)o.contractor=cs[0]}
+  o.location=lineVal(T,/สถานที่(?:ก่อสร้าง|ดำเนินการ|ทำงาน)?\s*[:：]?\s*/,/\s(?:ผู้ว่าจ้าง|ผู้รับจ้าง|เลขที่สัญญา|แบบเลขที่|ประมาณราคา|ลงวันที่|วงเงิน|ราคากลาง|แผ่นที่|หน่วยงาน)/,/^(?:ที่|ตาม|ดังกล่าว)$/);
+  const lp=locParts(o.location||''), lt=locParts(o.name||''), la=locParts(T); o._weak=[];
+  ['moo','tambon','amphoe','province'].forEach(k=>{o[k]=lp[k]||lt[k]||'';if(!o[k]&&k!=='moo'&&la[k]){o[k]=la[k];o._weak.push(k)}});
+  m=F.match(/(?:สัญญา(?:จ้าง)?\s*เลขที่|เลขที่\s*สัญญา|สัญญาที่|ใบสั่งจ้าง\s*เลขที่)\s*[:：]?\s*(?:ที่\s*)?([A-Za-zก-ฮ.]{0,10}\s?\d[\d\s./\-–]{0,14}\d|\d{1,4})/);
+  o.contractNo=m?m[1].replace(/\s+/g,''):'';
+  m=F.match(/((?:เงิน|งบ)[^\s]{0,20}(?:\s[^\s]{1,25}){0,4}?\s*(?:ประจำ)?ปีงบประมาณ\s*(?:พ\.?\s?ศ\.?\s*)?\d{4})/)||F.match(/((?:ประจำ)?ปีงบประมาณ\s*(?:พ\.?\s?ศ\.?\s*)?\d{4})/);
+  o.extra=m?m[1].trim():'';
+  o.start=dateNear(T,/(?:วันเริ่ม(?:ต้น)?(?:สัญญา|งาน|ปฏิบัติงาน|ทำงาน)?|เริ่ม(?:ต้น)?(?:ทำงาน|ปฏิบัติงาน|งาน|สัญญา|นับ)?(?:ตั้งแต่)?|นับตั้งแต่|ตั้งแต่)\s*(?:วันที่)?\s*/g,25);
+  const end=dateNear(T,/(?:ให้)?(?:แล้วเสร็จ(?:ภายใน)?|สิ้นสุด(?:สัญญา)?|ครบกำหนด(?:สัญญา)?|กำหนดส่งมอบ(?:งาน)?|ถึง)\s*(?:วันที่)?\s*/g,25);
+  m=F.match(/(?:ระยะเวลา|อายุสัญญา|กำหนด(?:เวลา)?(?:แล้วเสร็จ|ส่งมอบ)?|ภายใน)[^\d]{0,45}?(\d{1,4})\s*วัน/);
+  o.days=m&&+m[1]>0&&+m[1]<=3000?String(+m[1]):(o.start&&end&&end>o.start?String(dayDiff(o.start,end)+1):'');
+  m=F.match(/(?:วงเงิน(?:ค่าจ้าง|งบประมาณ|ตามสัญญา)?|ค่าจ้าง(?:ทั้งสิ้น)?|ราคา(?:ค่าจ้าง|ตามสัญญา)|เป็นเงิน(?:ทั้งสิ้น)?)[^\d]{0,30}?(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d{4,}(?:\.\d{1,2})?)\s*บาท/);
+  o.value=m?String(parseAmt(m[1])):'';
+  return o;
+}
+
+/* ---- ประกาศเขตการให้ความช่วยเหลือผู้ประสบภัยพิบัติกรณีฉุกเฉิน ---- */
+function dzAreasText(F){
+  const end='(?=\\s|,|\\(|\\)|$|\\d|หมู่|ม\\.|ต\\.|ตำบล|อ\\.|อำเภอ|จ\\.|จังหวัด|จำนวน|รวม|ได้แก่)';
+  const re=new RegExp('(?:อำเภอ|อ\\.)\\s*('+TH_NAME+')'+end+'|(?:ตำบล|ต\\.)\\s*('+TH_NAME+')'+end+'|(?:หมู่ที่|หมู่|ม\\.)\\s*(\\d{1,3}(?:\\s*(?:[-–]|ถึง)\\s*\\d{1,3})?(?:\\s*(?:,|และ|\\s)\\s*\\d{1,3}(?:\\s*(?:[-–]|ถึง)\\s*\\d{1,3})?)*)','g');
+  const STOPW=/^(ได้แก่|จำนวน|และ|ละ|ทั้ง|ที่|ต่าง|ใน|นั้น|ดังกล่าว|ดังนี้|เป็น)$/;
+  const out=[]; let am='', m;
+  while((m=re.exec(F))){
+    if(m[1]){if(!STOPW.test(m[1]))am=m[1]}
+    else if(m[2]){if(!STOPW.test(m[2]))out.push({amphoe:am,tambon:m[2],moos:''})}
+    else if(m[3]&&out.length){const l=out[out.length-1],v=m[3].replace(/ถึง/g,'-').replace(/\s*[-–]\s*/g,'-').replace(/\s*(?:,|และ)\s*|\s+/g,',');l.moos=l.moos?l.moos+','+v:v}
+  }
+  return out;
+}
+function dzAreasGrid(grid){
+  const hi=grid.findIndex(r=>r.some(c=>/อำเภอ/.test(c))&&r.some(c=>/ตำบล/.test(c))); if(hi<0) return [];
+  const H=grid[hi], ca=H.findIndex(c=>/อำเภอ/.test(c)), ct=H.findIndex(c=>/ตำบล/.test(c)), cm=H.findIndex(c=>/หมู่/.test(c));
+  const out=[]; let am='';
+  for(let i=hi+1;i<grid.length;i++){
+    const r=grid[i], j=r.join(' '); if(/รวม|ลงชื่อ|ประกาศ\s*ณ/.test(j)) break;
+    const a=stripPre(r[ca]||'',/^\s*(?:\d+[.)]?\s*)?(อ\.|อำเภอ)?\s*/), t=stripPre(r[ct]||'',/^\s*(ต\.|ตำบล)\s*/), mo=cm>=0?thNum(r[cm]||''):'';
+    if(a&&/^[ก-ฮเ-ไ]/.test(a)) am=a;
+    if(t&&/^[ก-ฮเ-ไ]/.test(t)) out.push({amphoe:am,tambon:t.split(' ')[0],moos:/ทั้ง|ทุก/.test(mo)?'':mo.replace(/[^\d,\-–\s]/g,' ').trim().replace(/\s*[-–]\s*/g,'-').replace(/[\s,]+/g,',')});
+  }
+  return out;
+}
+function parseDisaster(text,grid){
+  const T=thNum(text), F=flat(text), o={};
+  const inner=(F.match(/กรณีฉุกเฉิน\s*\(\s*(?:กรณี)?\s*([^)]{2,60})\)/)||[])[1]||'';
+  const hay=inner||F, has=w=>hay.includes(w);
+  if(has('อุทกภัย')&&has('วาตภัย')&&has('ดินโคลน')) o.type='อุทกภัย วาตภัย และดินโคลนถล่ม';
+  else{const t=[['อุทกภัย','อุทกภัย'],['วาตภัย','วาตภัย'],['ดินโคลน','ดินโคลนถล่ม'],['ภัยแล้ง','ภัยแล้ง'],['อัคคีภัย','อัคคีภัย']].map(([w,v])=>({v,i:hay.indexOf(w)})).filter(x=>x.i>=0).sort((a,b)=>a.i-b.i)[0];
+    if(t)o.type=t.v; else if(inner){o.type='อื่น ๆ';o.typeOther=inner.trim()}}
+  let m=F.match(new RegExp('ประกาศ\\s*จังหวัด\\s*('+TH_NAME+')(?=\\s|เรื่อง|$|\\d)'))||F.match(new RegExp('(?:จ\\.|จังหวัด)\\s*('+TH_NAME+')(?=\\s|$|\\d|,)'));
+  o.province=m?m[1]:'';
+  m=F.match(/(?:ฉบับที่|(?:^|\s)ที่)\s*(\d{1,4}\s*\/\s*(?:25)?\d{2})(?!\d)/); o.no=m?m[1].replace(/\s+/g,''):'';
+  o.signed=dateNear(T,/(?:ประกาศ|สั่ง)\s*ณ\s*(?:วันที่)?\s*/g,15);
+  o.start=dateNear(T,/(?:ตั้งแต่|นับตั้งแต่|นับแต่|เกิด(?:ภัย|เหตุ|สาธารณภัย)?(?:ขึ้น)?(?:เมื่อ)?|เมื่อ)\s*(?:วันที่)?\s*/g,30)||o.signed||((thDates(T)[0]||{}).v||'');
+  const e=dateNear(T,/(?:จนถึง|ถึง|สิ้นสุด)\s*(?:วันที่)?\s*/g,25); o.end=e&&o.start&&e>=o.start?e:'';
+  const g=grid&&grid.length?dzAreasGrid(grid):[];
+  const areas=(g.length?g:dzAreasText(F)), seen={};
+  o.areas=[];
+  areas.forEach(a=>{const k=normAmp(a.amphoe)+'|'+normArea(a.tambon);if(seen[k]){if(a.moos)seen[k].moos=seen[k].moos?seen[k].moos+','+a.moos:a.moos;return}seen[k]={...a};o.areas.push(seen[k])});
+  return o;
+}
+
+/* ---- ปร.5: Factor F ---- */
+function findFactor(text){
+  const T=thNum(text);
+  const m=T.match(/factor\s*f?\s*[=:：]?\s*(\d[.,]\d{2,4})(?!\d)/i)||T.match(/ค่า\s*(?:factor\s*)?F\s*[=:：]?\s*(\d[.,]\d{2,4})(?!\d)/i);
+  if(m){const v=parseFloat(m[1].replace(',','.'));if(v>=0.9&&v<=2)return v}
+  for(const l of T.split('\n')){if(!/\d{1,3}(?:,\d{3})+\.\d{2}/.test(l))continue;const k=l.match(/(?:^|\s)(1\.\d{4})(?=\s|$)/);if(k)return +k[1]}
+  return null;
+}
+
+/* ---- ใบส่งของ / ใบเสร็จวัสดุ → รายการวัสดุ ---- */
+const MAT_UNIT_RE=/^(ถุง|ก้อน|คิว|ลบ\.?ม\.?|ตร\.?ม\.?|ม\.|เมตร|ซม\.?|มม\.?|กก\.?|กิโลกรัม|ตัน|ลิตร|แกลลอน|ถัง|กระป๋อง|ชุด|ต้น|แผ่น|เส้น|ท่อน|อัน|ตัว|ลูก|ใบ|บาน|ชิ้น|คู่|ม้วน|กล่อง|ลัง|โหล|ดวง|หลอด|เครื่อง|เที่ยว|คัน|กระสอบ|มัด|ขด|แท่ง|ห่อ|แพ็ค|ฟุต|นิ้ว|หลา|ตารางเมตร|ลูกบาศก์เมตร|ลบม\.?|ตรม\.?|pcs?|set|kg|m2|m3|ea|unit|box)$/i;
+function parseMaterials(rowTexts){
+  const out=[];
+  rowTexts.forEach(raw=>{
+    const s=thNum(raw).replace(/(\d)([ก-๙])/g,'$1 $2').replace(/[|¦]/g,' ').replace(/\s+/g,' ').trim();
+    if(!s||/^(ลำดับ|รายการ|ที่\s|รวม|ยอด|ภาษี|vat|หมายเหตุ|ผู้รับ|ผู้ส่ง|ลงชื่อ)/i.test(s)||isTotalRow(s)) return;
+    const tk=s.split(' '), isN=t=>t!=null&&!isNaN(parseAmt(t));
+    let u=tk.findIndex((t,i)=>i>0&&MAT_UNIT_RE.test(t)&&isN(tk[i-1])); if(u<0) u=tk.findIndex((t,i)=>i>0&&MAT_UNIT_RE.test(t)&&isN(tk[i+1]));
+    if(u<0) return;
+    let qi=isN(tk[u-1])?u-1:u+1, q=parseAmt(tk[qi]);
+    if(!(q>0)) return;
+    let nm=tk.slice(0,Math.min(qi,u)); if(nm.length>1&&/^\d{1,3}[.)]?$/.test(nm[0])) nm=nm.slice(1);
+    const name=nm.join(' ').replace(/^[\s\-–.:]+|[\s\-–:]+$/g,'');
+    if((name.match(/[ก-ฮ]/g)||[]).length<2&&!/[A-Za-z]{3}/.test(name)) return;
+    out.push({n:name,q:String(q),u:tk[u],inc:true});
+  });
+  return out;
+}
+
+Object.assign(P,{camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.2"/>'});
 
 /* ---- ส่วนในฟอร์ม: ความก้าวหน้าตามรายการงาน ---- */
 REND.boq=b=>{
@@ -1704,9 +2108,10 @@ REND.boq=b=>{
   }
   const tot=boqSum(bq), groups=groupsOf(bq);
   const rowHTML=i=>{const w=itemVal(bq,i)/tot*100;const v=num(prog[i.id]);
-    return '<div class="bqr" data-id="'+esc(i.id)+'" data-n="'+esc((i.name||'').toLowerCase())+'"><div class="bqr-t">'+(i.no?esc(i.no)+'. ':'')+esc(i.name)+'</div><div class="bqr-m">น้ำหนัก '+fmtN(w,3)+'% · '+fmtN(num(i.amount),2)+' บาท'+(kindOf(i)==='equip'?' · ครุภัณฑ์':'')+'<span class="dl"></span></div><div class="bqr-c">'+
+    return '<div class="bqr" data-id="'+esc(i.id)+'" data-n="'+esc((i.name||'').toLowerCase())+'"><div class="bqr-t">'+(i.no?esc(i.no)+'. ':'')+esc(i.name)+'</div><div class="bqr-m">น้ำหนัก '+fmtN(w,3)+'% · '+fmtN(num(i.amount),2)+' บาท'+(kindOf(i)==='equip'?' · ครุภัณฑ์':'')+(iqty(i)?' · ปริมาณ '+qfmt(iqty(i))+' '+esc(i.unit||''):'')+'<span class="dl"></span></div><div class="bqr-c">'+
       [0,25,50,75,100].map(x=>'<button type="button" class="chip" data-set="'+x+'">'+x+'</button>').join('')+
-      '<label class="bpc"><input type="number" min="0" max="100" step="any" inputmode="decimal" class="bp" aria-label="% สะสม"><span>%</span></label></div></div>'};
+      '<label class="bpc"><input type="number" min="0" max="100" step="any" inputmode="decimal" class="bp" aria-label="% สะสม"><span>%</span></label></div>'+
+      (iqty(i)?'<label class="bqq"><span>ปริมาณสะสม</span><input type="number" min="0" step="any" inputmode="decimal" class="bqd" aria-label="ปริมาณสะสม"><span>/ '+qfmt(iqty(i))+' '+esc(i.unit||'')+'</span></label>':'')+'</div>'};
   b.innerHTML=
    '<div class="bqs"><div class="big"><small>ผลงานสะสมรวมโครงการ</small><b id="bsA">0.00%</b></div><div><small>แผนงานสะสม</small><b id="bsP">—</b></div><div><small>ผลต่าง</small><b id="bsD">—</b></div></div>'+
    '<div class="bq-bar"><i id="bsBar"></i><u id="bsPl" style="display:none"></u></div><div class="sm-note" id="bsK" style="margin:-6px 0 8px"></div><div id="bsSug"></div>'+
@@ -1727,13 +2132,16 @@ REND.boq=b=>{
     b.querySelectorAll('.bqg').forEach(g=>{let s=0,t=0;g.querySelectorAll('.bqr').forEach(row=>{const it=bq.items.find(x=>x.id===row.dataset.id);s+=itemVal(bq,it)*clampP(prog[it.id])/100;t+=itemVal(bq,it)});g.querySelector('.gp').textContent='ครบ '+fmtN(t?s/t*100:0,1)+'% ของหมวด'});
   };
   const paint=row=>{const id=row.dataset.id,v=num(prog[id]),dv=v-num(pp[id]);const inp=row.querySelector('.bp');if(document.activeElement!==inp)inp.value=prog[id]==null||prog[id]===''?'':prog[id];
-    row.classList.toggle('done',v>=100);row.querySelector('.dl').textContent=dv!==0?' · วันนี้ '+(dv>0?'+':'')+fmtN(dv,1)+'%':(prev?' · ไม่เปลี่ยนจากครั้งก่อน':'');
+    const it=bq.items.find(x=>x.id===id), Q=iqty(it), qd=row.querySelector('.bqd');
+    if(qd&&document.activeElement!==qd) qd.value=prog[id]==null||prog[id]===''?'':String(Math.round(v*Q/100*100)/100);
+    row.classList.toggle('done',v>=100);row.querySelector('.dl').textContent=dv!==0?' · วันนี้ '+(dv>0?'+':'')+fmtN(dv,1)+'%'+(Q?' ('+(dv>0?'+':'')+qfmt(dv*Q/100)+' '+(it.unit||'')+')':''):(prev?' · ไม่เปลี่ยนจากครั้งก่อน':'');
     row.querySelectorAll('[data-set]').forEach(c=>c.classList.toggle('on',v===+c.dataset.set))};
   const setP=(row,val)=>{const id=row.dataset.id;prog[id]=val===''?'':String(clampP(val));paint(row);boqSyncProgress(r);save();refresh();if(vis('progress'))rerender('progress')};
   const filt=()=>{const q=$('bqQ').value.trim().toLowerCase(),hd=$('bqHide').checked;b.querySelectorAll('.bqr').forEach(row=>{const v=num(prog[row.dataset.id]);row.classList.toggle('hide',(q&&!row.dataset.n.includes(q))||(hd&&v>=100))})};
   b.querySelectorAll('.bqr').forEach(row=>{
     paint(row);
     row.querySelector('.bp').oninput=e=>setP(row,e.target.value);
+    const qd=row.querySelector('.bqd'); if(qd) qd.oninput=e=>{const it=bq.items.find(x=>x.id===row.dataset.id),Q=iqty(it),v=e.target.value;if(v===''){setP(row,'');return}const n=num(v);if(n>Q&&!qd._w){qd._w=1;toast('เกินปริมาณตามสัญญา ('+qfmt(Q)+' '+(it.unit||'')+') — คิดเป็น 100%')}setP(row,String(Math.round(Math.min(n,Q)/Q*100*1e4)/1e4))};
     row.querySelectorAll('[data-set]').forEach(c=>c.onclick=()=>setP(row,c.dataset.set));
   });
   $('bqQ').oninput=filt;$('bqHide').onchange=filt;
@@ -1759,7 +2167,7 @@ function openBoq(pid){
      '<label><small>ยอดตามสัญญา (บาท)</small><input class="inp" id="bqC" type="number" step="0.01" inputmode="decimal"></label></div>'+
      '<label class="fl" style="display:block;margin-top:6px"><small style="display:block;color:var(--muted);font-size:calc(12px*var(--fz))">ฐานที่ใช้ถ่วงน้ำหนัก</small><select class="inp" id="bqB"><option value="after">ยอดหลังคูณ Factor / 1.07 (แนะนำ — ตรงกับยอดตามสัญญา)</option><option value="before">ยอด ปร.4 ก่อนคูณ</option></select></label>'+
      '<p class="sm-note">กรอก Factor หรือยอดตามสัญญาอย่างใดอย่างหนึ่ง อีกค่าจะคำนวณให้ (ใช้ยอดครุภัณฑ์ × ตัวคูณเป็นส่วนที่ตายตัว แล้วหา Factor จากส่วนที่เหลือ)</p>'+
-     '<div class="bq-tool"><button class="btn sm" id="bqImp" type="button">'+ico('scan')+'นำเข้า ปร.4</button><button class="btn ghost sm" id="bqNew" type="button">'+ico('plus')+'เพิ่มรายการ</button><button class="btn ghost sm" id="bqSC2" type="button">'+ico('chart')+'ภาพรวม / S-Curve</button><button class="btn line sm" id="bqClr" type="button">'+ico('trash')+'ล้างทั้งหมด</button></div>'+
+     '<div class="bq-tool"><button class="btn sm" id="bqImp" type="button">'+ico('scan')+'นำเข้า ปร.4 / ปร.5</button><button class="btn ghost sm" id="bqF5" type="button">'+ico('scan')+'อ่าน Factor F (ปร.5)</button><button class="btn ghost sm" id="bqNew" type="button">'+ico('plus')+'เพิ่มรายการ</button><button class="btn ghost sm" id="bqSC2" type="button">'+ico('chart')+'ภาพรวม / S-Curve</button><button class="btn line sm" id="bqClr" type="button">'+ico('trash')+'ล้างทั้งหมด</button></div>'+
      '<div id="bqList"></div><datalist id="grpDl"></datalist>'+
      '<div class="stbox" id="bqFoot"></div>'+
      '<div class="acts2"><button class="btn sm" id="bqDone" type="button">'+ico('check')+'เสร็จสิ้น</button></div>';
@@ -1793,10 +2201,11 @@ function openBoq(pid){
         const c=document.createElement('div');c.className='bqi';c.dataset.id=it.id;
         c.innerHTML='<div class="bqi-h"><input class="no" placeholder="ที่"><textarea class="nm" rows="1" placeholder="รายการงาน"></textarea><button type="button" class="ib danger del" aria-label="ลบรายการ">'+ico('trash')+'</button></div>'+
          '<div class="bqi-m"><label><span>จำนวนเงิน ปร.4 (บาท)</span><input class="am" type="number" step="any" inputmode="decimal"></label><div class="wt"><small>น้ำหนัก</small><b>—</b></div><div class="af"><small>หลังคูณ F / 1.07</small><b>—</b></div></div>'+
+         '<div class="g2 keep bqi-q"><label><span>ปริมาณตามสัญญา</span><input class="qt" type="number" step="any" inputmode="decimal" placeholder="เช่น 120"></label><label><span>หน่วย</span><input class="ut" list="unitDl" placeholder="เช่น ตร.ม."></label></div>'+
          '<label style="display:block;margin-top:8px"><span style="display:block;font-size:calc(11.5px*var(--fz));color:var(--muted)">ประเภทงาน</span><select class="kd"><option value="con">งานก่อสร้าง (× Factor F)</option><option value="equip">ครุภัณฑ์ (× ตัวคูณครุภัณฑ์ เช่น 1.07)</option></select></label>'+
          '<details><summary>หมวดงาน / แผนงาน (ไม่บังคับ)</summary><div class="g3"><label><span>หมวดงาน</span><input class="gp" list="grpDl"></label><label><span>วันที่เริ่มตามแผน</span><input class="st" type="date"></label><label><span>วันที่เสร็จตามแผน</span><input class="en" type="date"></label></div><p class="sm-note">ถ้าไม่ใส่ แอปใช้วันเริ่มสัญญาและอายุสัญญาของโครงการเป็นช่วงแผน (กระจายเท่า ๆ กัน) — ครุภัณฑ์มักส่งมอบช่วงท้ายโครงการ ควรใส่วันตามแผนจริง</p></details>';
         const bindF=(s,k)=>{const e=c.querySelector(s);e.value=it[k]==null?'':it[k];e.oninput=()=>{it[k]=e.value;if(k==='amount'){recalcContract();calcAll()}save()}};
-        bindF('.no','no');bindF('.nm','name');bindF('.am','amount');bindF('.gp','grp');bindF('.st','start');bindF('.en','end');
+        bindF('.no','no');bindF('.nm','name');bindF('.am','amount');bindF('.gp','grp');bindF('.st','start');bindF('.en','end');bindF('.qt','qty');bindF('.ut','unit');
         const kd=c.querySelector('.kd');kd.value=kindOf(it);
         kd.onchange=()=>{
           it.kind=kd.value; const g=(it.grp||'').trim();
@@ -1813,49 +2222,86 @@ function openBoq(pid){
     draw();
     $('bqNew').onclick=()=>{const last=bq.items[bq.items.length-1];bq.items.push({id:uid(),no:String(bq.items.length+1),name:'',amount:'',grp:last?last.grp:'',kind:last?kindOf(last):'con',start:'',end:''});save();draw();const l=mb.querySelectorAll('.bqi .nm');l[l.length-1].focus()};
     $('bqClr').onclick=()=>{if(bq.items.length&&confirm('ลบรายการ ปร.4 ทั้งหมดของโครงการนี้? (ค่าความก้าวหน้ารายงานเดิมจะไม่ถูกนำมาคำนวณ)')){bq.items=[];bq.contract='';save();draw()}};
-    $('bqImp').onclick=()=>openBoqImport(pid);
+    $('bqImp').onclick=()=>openBoqImport(pid); $('bqF5').onclick=()=>openFactorScan(pid);
     $('bqSC2').onclick=()=>openSCurve(pid);
     $('bqDone').onclick=()=>{boqSyncProgress(R());save();closeModal();renderForm()};
   });
 }
 
-/* ---- ตัวช่วยนำเข้า ปร.4 ---- */
+/* ---- ตัวช่วยนำเข้า ปร.4 (BOQ) / ปร.5 ---- */
 function openBoqImport(pid){
   const bq=boqOf(pid);
-  openModal('นำเข้า ปร.4 (BOQ)',mb=>{
+  openModal('นำเข้า ปร.4 / ปร.5 (BOQ)',mb=>{
     mb.innerHTML=
-     '<div class="note-box"><b>วิธีที่แม่นยำที่สุดคือไฟล์ Excel/CSV</b> หรือวางข้อความที่คัดลอกจาก Excel ส่วนภาพถ่าย/สแกนอ่านด้วย OCR ภาษาไทย ซึ่งอาจผิดพลาดตามคุณภาพภาพ จึงมีขั้นตอน “ตรวจทาน” ให้แก้ก่อนนำเข้าทุกครั้ง (ต้องต่ออินเทอร์เน็ตตอนอ่านไฟล์/ภาพ เพราะโหลดตัวอ่านจากเว็บ)</div>'+
-     '<div class="acts"><button class="btn line" id="imX" type="button">'+ico('sheet')+'ไฟล์ Excel / CSV</button><button class="btn line" id="imI" type="button">'+ico('scan')+'ภาพถ่าย / สแกน / PDF (OCR)</button><button class="btn line" id="imP" type="button">'+ico('clipboard')+'วางข้อความจาก Excel</button></div>'+
-     '<input type="file" id="fX" accept=".xlsx,.xls,.csv,.xlsm" hidden><input type="file" id="fI" accept="image/*,application/pdf" multiple hidden>'+
+     '<div class="note-box"><b>แม่นยำที่สุด: ไฟล์ Excel/CSV</b> หรือวางข้อความที่คัดลอกจาก Excel · <b>ภาพถ่าย / สแกน / PDF</b> อ่านด้วย OCR ภาษาไทย (OpenThai) แล้วจัดเป็นตารางให้เลือกคอลัมน์ ใช้ได้ทั้ง ปร.4 (รายการงาน) และ ปร.5 (สรุปตามหมวด + Factor F) — ทุกวิธีมีขั้นตอน “ตรวจทาน” ก่อนนำเข้า</div>'+
+     '<div class="acts"><button class="btn line" id="imI" type="button">'+ico('scan')+'ภาพถ่าย / สแกน / PDF (OCR)</button><button class="btn line" id="imX" type="button">'+ico('sheet')+'ไฟล์ Excel / CSV</button><button class="btn line" id="imP" type="button">'+ico('clipboard')+'วางข้อความจาก Excel</button></div>'+
+     '<input type="file" id="fX" accept=".xlsx,.xls,.csv,.xlsm" hidden>'+
      '<div id="imStage" style="margin-top:12px"></div><div class="acts2"><button class="btn line sm" id="imBack" type="button">กลับไปหน้า ปร.4</button></div>';
     const stage=$('imStage');
     $('imBack').onclick=()=>openBoq(pid);
     const busy=t=>{stage.innerHTML='<div class="note-box">'+esc(t)+'</div>'};
     const fail=(e,t)=>{console.error(e);stage.innerHTML='<div class="note-box" style="border-color:var(--warn)">'+esc(t||'อ่านไฟล์ไม่สำเร็จ')+' <small>('+esc(e&&e.message||e)+')</small></div>'};
     /* --- ตรวจทาน --- */
-    const review=(items,srcNote)=>{
-      stage.innerHTML='<div class="note-box">'+(srcNote?esc(srcNote)+'<br>':'')+'ตรวจทานรายการด้านล่าง: ติ๊กออกแถวที่ไม่ใช่รายการงาน (เช่น ยอดรวม/ภาษี) แก้ชื่อหรือจำนวนเงินที่อ่านผิด แล้วกดนำเข้า</div><div id="rvList"></div><div class="stbox" id="rvFoot"></div>'+
-       '<div class="acts2"><button class="btn line sm" id="rvAdd" type="button">นำเข้าต่อท้ายรายการเดิม</button><button class="btn sm" id="rvRep" type="button">นำเข้าแทนที่ทั้งหมด</button></div>';
+    const review=(items,srcNote,ex)=>{
+      ex=ex||{};
+      const fac=ex.factor!=null&&Math.abs(ex.factor-(num(bq.factor)||1))>1e-6?ex.factor:null;
+      stage.innerHTML='<div class="note-box">'+(srcNote?esc(srcNote)+'<br>':'')+'ตรวจทานรายการด้านล่าง: ติ๊กออกแถวที่ไม่ใช่รายการงาน (เช่น ยอดรวม/ภาษี) แก้ชื่อหรือจำนวนเงินที่อ่านผิด แล้วกดนำเข้า</div>'+
+       (fac!=null?'<label class="chk ocr-fac"><input type="checkbox" id="rvFac" checked> ตั้ง <b>Factor F = '+fac+'</b> (พบในเอกสาร ปร.5 — ค่าเดิม '+esc(bq.factor||'1')+')</label>':'')+
+       (ex.pages?ocrThumbs(ex.pages):'')+
+       '<div id="rvList"></div><div class="stbox" id="rvFoot"></div>'+
+       '<div class="acts2"><button class="btn line sm" id="rvAdd" type="button">นำเข้าต่อท้ายรายการเดิม</button><button class="btn sm" id="rvRep" type="button">นำเข้าแทนที่ทั้งหมด</button>'+(ex.back?'<button class="btn ghost sm" id="rvBack" type="button">'+ico('left')+'กลับไปเลือกคอลัมน์</button>':'')+'</div>';
       const list=$('rvList');
-      const foot=()=>{const inc=items.filter(x=>x.inc);$('rvFoot').innerHTML='เลือกไว้ <b>'+inc.length+'</b> จาก '+items.length+' แถว (ครุภัณฑ์ '+inc.filter(x=>x.kind==='equip').length+') · ยอดรวมก่อนคูณ <b>'+fmtN(inc.reduce((a,x)=>a+num(x.amount),0),2)+'</b> บาท'};
+      const foot=()=>{const inc=items.filter(x=>x.inc);$('rvFoot').innerHTML='เลือกไว้ <b>'+inc.length+'</b> จาก '+items.length+' แถว (ครุภัณฑ์ '+inc.filter(x=>x.kind==='equip').length+' · มีปริมาณ '+inc.filter(x=>num(x.qty)>0).length+') · ยอดรวมก่อนคูณ <b>'+fmtN(inc.reduce((a,x)=>a+num(x.amount),0),2)+'</b> บาท'};
       items.forEach(it=>{
         const row=document.createElement('div');row.className='imrow'+(it.inc?'':' off');
-        row.innerHTML='<input type="checkbox" aria-label="นำเข้า"><input type="text" class="no" placeholder="ที่"><textarea class="nm" rows="2"></textarea><input type="number" class="am" step="any" inputmode="decimal"><input type="text" class="gp" placeholder="หมวดงาน"><select class="kd"><option value="con">งานก่อสร้าง</option><option value="equip">ครุภัณฑ์</option></select>';
+        row.innerHTML='<input type="checkbox" aria-label="นำเข้า"><input type="text" class="no" placeholder="ที่"><textarea class="nm" rows="2"></textarea><input type="number" class="am" step="any" inputmode="decimal"><input type="text" class="gp" placeholder="หมวดงาน"><select class="kd"><option value="con">งานก่อสร้าง</option><option value="equip">ครุภัณฑ์</option></select><div class="qu"><input type="number" class="qt" step="any" inputmode="decimal" placeholder="ปริมาณ" aria-label="ปริมาณตามสัญญา"><input type="text" class="ut" placeholder="หน่วย" list="unitDl" aria-label="หน่วย"></div>';
         const c=row.querySelector('input[type=checkbox]');c.checked=it.inc;c.onchange=()=>{it.inc=c.checked;row.classList.toggle('off',!it.inc);foot()};
         const b=(s,k,num_)=>{const e=row.querySelector(s);e.value=it[k]==null?'':it[k];e.oninput=()=>{it[k]=num_?parseFloat(e.value)||0:e.value;if(num_)foot()}};
-        b('.no','no');b('.nm','name');b('.am','amount',true);b('.gp','grp');const kd=row.querySelector('.kd');kd.value=it.kind==='equip'?'equip':'con';kd.onchange=()=>{it.kind=kd.value;foot()};list.appendChild(row);
+        b('.no','no');b('.nm','name');b('.am','amount',true);b('.gp','grp');b('.qt','qty');b('.ut','unit');const kd=row.querySelector('.kd');kd.value=it.kind==='equip'?'equip':'con';kd.onchange=()=>{it.kind=kd.value;foot()};list.appendChild(row);
       });
       foot();
+      const rb=$('rvBack'); if(rb) rb.onclick=ex.back;
       const apply=replace=>{
         const sel=items.filter(x=>x.inc&&num(x.amount)>0);
         if(!sel.length){toast('ยังไม่ได้เลือกรายการ');return}
         if(replace&&bq.items.length&&!confirm('แทนที่รายการ ปร.4 เดิม '+bq.items.length+' รายการ? (ค่าความก้าวหน้ารายงานเดิมที่ผูกกับรายการเก่าจะไม่ถูกนำมาคำนวณ)'))return;
-        const nw=sel.map(x=>({id:uid(),no:String(x.no||''),name:x.name,amount:String(x.amount),grp:x.grp||'',kind:x.kind==='equip'?'equip':'con',start:'',end:''}));
+        const nw=sel.map(x=>({id:uid(),no:String(x.no||''),name:x.name,amount:String(x.amount),qty:num(x.qty)>0?String(x.qty):'',unit:num(x.qty)>0?String(x.unit||'').trim():'',grp:x.grp||'',kind:x.kind==='equip'?'equip':'con',start:'',end:''}));
         bq.items=replace?nw:bq.items.concat(nw);
+        const fc=$('rvFac'); if(fac!=null&&fc&&fc.checked) bq.factor=String(fac);
         bq.contract=bq.items.length?String(Math.round(contractSum(bq)*100)/100):'';
-        save();toast('นำเข้า '+nw.length+' รายการแล้ว');openBoq(pid);
+        save();toast('นำเข้า '+nw.length+' รายการแล้ว'+(fac!=null&&fc&&fc.checked?' · Factor F = '+fac:''));openBoq(pid);
       };
       $('rvRep').onclick=()=>apply(true);$('rvAdd').onclick=()=>apply(false);
+    };
+    /* --- เลือกคอลัมน์ (ใช้กับ Excel และตารางที่อ่านจากภาพ) --- */
+    const mapStage=(rows,o)=>{
+      let map=detectMap(rows);
+      const hdrRow=()=>rows[Math.max(map.hr,0)]||[];
+      const opt=(sel)=>Array.from({length:map.maxC},(_,c)=>{const h=String(hdrRow()[c]==null?'':hdrRow()[c]).slice(0,22);return '<option value="'+c+'"'+(c===sel?' selected':'')+'>'+colName(c)+(h?': '+esc(h):'')+'</option>'}).join('');
+      const prevTbl=()=>{const R0=Math.max(map.hr,0),rs=rows.slice(R0,R0+9);return '<div class="ocr-grid"><table><tr><th></th>'+Array.from({length:map.maxC},(_,c)=>'<th class="'+(c===map.name?'cn':c===map.amt?'ca':c===map.no||c===map.qty||c===map.unit?'co':'')+'">'+colName(c)+'</th>').join('')+'</tr>'+
+        rs.map((r,i)=>'<tr><th>'+(R0+i+1)+'</th>'+Array.from({length:map.maxC},(_,c)=>'<td class="'+(c===map.name?'cn':c===map.amt?'ca':c===map.no||c===map.qty||c===map.unit?'co':'')+'">'+esc(String(r[c]==null?'':r[c]).slice(0,40))+'</td>').join('')+'</tr>').join('')+'</table></div>'};
+      const draw=()=>{
+        stage.innerHTML=(o.top||'')+'<div class="mapg">'+(o.sheets?'<label><span>ชีต</span><select id="mS">'+o.sheets.names.map((n,i)=>'<option value="'+i+'"'+(i===o.sheets.cur?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select></label>':'')+
+          '<label><span>แถวหัวตาราง'+(o.ocr?'':' (เลขแถวใน Excel)')+'</span><input id="mH" type="number" min="0" value="'+(map.hr+1)+'"></label>'+
+          '<label><span>คอลัมน์ “รายการ”</span><select id="mN">'+opt(map.name)+'</select></label><label><span>คอลัมน์ “จำนวนเงิน” (ปร.4: รวมค่าวัสดุและแรงงาน · ปร.5: ค่างานต้นทุน)</span><select id="mA">'+opt(map.amt)+'</select></label>'+
+          '<label><span>คอลัมน์ “ลำดับที่” (ถ้ามี)</span><select id="mO"><option value="-1">ไม่ระบุ</option>'+opt(map.no)+'</select></label>'+
+          '<label><span>คอลัมน์ “จำนวน” (ปริมาณงาน)</span><select id="mQ"><option value="-1">ไม่ระบุ</option>'+opt(map.qty)+'</select></label><label><span>คอลัมน์ “หน่วย”</span><select id="mU"><option value="-1">ไม่ระบุ</option>'+opt(map.unit)+'</select></label></div>'+
+          '<details class="ocr-d"'+(o.ocr?' open':'')+'><summary>ตัวอย่างตาราง (สีเขียว = รายการ · สีส้ม = จำนวนเงิน · สีฟ้า = ลำดับ / จำนวน / หน่วย)</summary><div id="mTbl"></div></details><div id="mRes"></div>';
+        $('mO').value=String(map.no); $('mQ').value=String(map.qty); $('mU').value=String(map.unit);
+        const go=()=>{
+          const items=parseTable(rows,map,{wrap:!!o.ocr}); if(o.equip) items.forEach(x=>{x.kind='equip'});
+          $('mTbl').innerHTML=prevTbl();
+          $('mRes').innerHTML='<div class="note-box">พบ <b>'+items.length+'</b> รายการ (ยอดรวม '+fmtN(items.filter(x=>x.inc).reduce((s,x)=>s+x.amount,0),2)+' บาท)'+(' · มีปริมาณ '+items.filter(x=>num(x.qty)>0).length+' รายการ')+(o.factor!=null?' · พบ Factor F = <b>'+o.factor+'</b>':'')+' — ถ้าไม่ถูกต้องให้ปรับคอลัมน์ด้านบน</div><div class="acts2"><button class="btn sm" id="mGo" type="button">ไปขั้นตรวจทาน</button>'+(o.ocr?'<button class="btn line sm" id="mTx" type="button">ใช้ข้อความทีละบรรทัดแทน</button>':'')+'</div>';
+          $('mGo').onclick=()=>review(items,o.label,{factor:o.factor,pages:o.pages,back:draw});
+          const mt=$('mTx'); if(mt) mt.onclick=o.asText;
+        };
+        const mS=$('mS'); if(mS) mS.onchange=e=>o.sheets.onSheet(+e.target.value);
+        $('mH').onchange=e=>{map.hr=(parseInt(e.target.value,10)||1)-1;go()};
+        $('mN').onchange=e=>{map.name=+e.target.value;go()};$('mA').onchange=e=>{map.amt=+e.target.value;go()};$('mO').onchange=e=>{map.no=+e.target.value;go()};
+        $('mQ').onchange=e=>{map.qty=+e.target.value;go()};$('mU').onchange=e=>{map.unit=+e.target.value;go()};
+        go();
+      };
+      draw();
     };
     /* --- Excel / CSV --- */
     $('imX').onclick=()=>$('fX').click();
@@ -1864,22 +2310,9 @@ function openBoqImport(pid){
       try{
         await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
         const wb=/\.csv$/i.test(f.name)?XLSX.read(await f.text(),{type:'string'}):XLSX.read(await f.arrayBuffer(),{type:'array'});
-        const names=wb.SheetNames; let cur=0, rows=[], map=null;
-        const load=()=>{rows=XLSX.utils.sheet_to_json(wb.Sheets[names[cur]],{header:1,raw:true,defval:''});map=detectMap(rows);show()};
-        const show=()=>{
-          const opt=(sel)=>Array.from({length:map.maxC},(_,c)=>{const h=String((rows[Math.max(map.hr,0)]||[])[c]==null?'':(rows[Math.max(map.hr,0)]||[])[c]).slice(0,22);return '<option value="'+c+'"'+(c===sel?' selected':'')+'>'+colName(c)+(h?': '+esc(h):'')+'</option>'}).join('');
-          stage.innerHTML='<div class="mapg"><label><span>ชีต</span><select id="mS">'+names.map((n,i)=>'<option value="'+i+'"'+(i===cur?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select></label><label><span>แถวหัวตาราง (เลขแถวใน Excel)</span><input id="mH" type="number" min="0" value="'+(map.hr+1)+'"></label>'+
-            '<label><span>คอลัมน์ “รายการ”</span><select id="mN">'+opt(map.name)+'</select></label><label><span>คอลัมน์ “จำนวนเงิน” (รวมค่าวัสดุและแรงงาน)</span><select id="mA">'+opt(map.amt)+'</select></label>'+
-            '<label><span>คอลัมน์ “ลำดับที่” (ถ้ามี)</span><select id="mO"><option value="-1">ไม่ระบุ</option>'+opt(map.no)+'</select></label></div><div id="mRes"></div>';
-          $('mO').value=String(map.no);
-          const renderPrev=()=>{const items=stage._items;$('mRes').innerHTML='<div class="note-box">พบ <b>'+items.length+'</b> รายการ (ยอดรวม '+fmtN(items.filter(x=>x.inc).reduce((s,x)=>s+x.amount,0),2)+' บาท) — ถ้าไม่ถูกต้องให้ปรับคอลัมน์ด้านบน</div><button class="btn sm" id="mGo" type="button">ไปขั้นตรวจทาน</button>';$('mGo').onclick=()=>review(items,'อ่านจากชีต “'+names[cur]+'”')};
-          const go=()=>{stage._items=parseTable(rows,map);if(/ครุภัณฑ์/.test(names[cur]))stage._items.forEach(x=>{x.kind='equip'});renderPrev()};
-          $('mS').onchange=e=>{cur=+e.target.value;load()};
-          $('mH').onchange=e=>{map.hr=(parseInt(e.target.value,10)||1)-1;go()};
-          $('mN').onchange=e=>{map.name=+e.target.value;go()};$('mA').onchange=e=>{map.amt=+e.target.value;go()};$('mO').onchange=e=>{map.no=+e.target.value;go()};
-          go();
-        };
-        load();
+        const names=wb.SheetNames;
+        const load=cur=>{const rows=XLSX.utils.sheet_to_json(wb.Sheets[names[cur]],{header:1,raw:true,defval:''});mapStage(rows,{label:'อ่านจากชีต “'+names[cur]+'”',equip:/ครุภัณฑ์/.test(names[cur]),factor:findFactor(rows.slice(0,200).map(r=>r.join(' ')).join('\n')),sheets:{names,cur,onSheet:load}})};
+        load(0);
       }catch(err){fail(err,'อ่านไฟล์ Excel/CSV ไม่สำเร็จ (ต้องต่ออินเทอร์เน็ตเพื่อโหลดตัวอ่านไฟล์ หรือไฟล์เสียหาย)')}
     };
     /* --- วางข้อความ --- */
@@ -1891,35 +2324,202 @@ function openBoqImport(pid){
         if(/\t/.test(txt)){const rows=txt.split(/\r?\n/).map(l=>l.split('\t'));items=parseTable(rows,detectMap(rows))}
         else items=parseLines(txt);
         if(!items.length){toast('อ่านรายการไม่พบ — ลองคัดลอกให้ครบทั้งหัวตาราง');return}
-        review(items,'อ่านจากข้อความที่วาง');
+        review(items,'อ่านจากข้อความที่วาง',{factor:findFactor(txt)});
       };
     };
-    /* --- ภาพ / PDF (OCR) --- */
-    $('imI').onclick=()=>{
-      stage.innerHTML='<div class="note-box">เลือกภาพถ่ายหรือไฟล์สแกน (หลายหน้าได้) แนะนำให้ถ่ายตรง ๆ แสงสม่ำเสมอ ไม่เอียง หากภาพตะแคงให้เลือกหมุนก่อน</div><div class="mapg"><label><span>หมุนภาพ</span><select id="oRot"><option value="0">ไม่หมุน</option><option value="90">หมุนขวา 90°</option><option value="270">หมุนซ้าย 90°</option><option value="180">กลับหัว 180°</option></select></label></div><button class="btn sm" id="oPick" type="button">'+ico('imgplus')+'เลือกภาพ / PDF แล้วเริ่มอ่าน</button>';
-      $('oPick').onclick=()=>$('fI').click();
+    /* --- ภาพ / PDF (OCR) → ตาราง --- */
+    $('imI').onclick=()=>ocrPick(stage,{hint:'ถ่ายภาพหรือเลือกไฟล์ <b>แบบ ปร.4</b> (ทุกแผ่น) หรือ <b>ปร.5</b> — PDF ที่ส่งออกจาก Excel/Word อ่านข้อความในไฟล์ได้ตรง 100% · ภาพถ่าย: วางกระดาษบนพื้นเรียบ ถ่ายตรงให้เห็นทั้งตาราง (หลายแผ่นถ่ายต่อกันได้)',onPages:pages=>{
+      const text=ocrText(pages), grid=ocrGrid(pages), factor=findFactor(text), label='อ่านจากภาพ/PDF ('+pages.length+' หน้า · '+pages.engine+')';
+      const asText=()=>{
+        stage.innerHTML='<div class="note-box">ข้อความที่อ่านได้ (แก้ไขได้ก่อนจัดรายการ — แต่ละบรรทัดควรมี “ชื่อรายการ … จำนวนเงิน” โดยจำนวนเงินอยู่ท้ายบรรทัด)</div><textarea id="oTx" class="inp ocr-tx" rows="10"></textarea><div class="acts2"><button class="btn sm" id="oGo" type="button">จัดเป็นรายการ</button><button class="btn line sm" id="oTb" type="button">กลับไปแบบตาราง</button></div>';
+        $('oTx').value=text;
+        $('oTb').onclick=()=>mapStage(grid,{label,ocr:true,factor,pages,asText});
+        $('oGo').onclick=()=>{const items=parseLines($('oTx').value);if(!items.length){toast('จัดรายการไม่ได้ — ตรวจสอบให้แต่ละบรรทัดมีชื่อรายการและจำนวนเงินท้ายบรรทัด');return}review(items,label,{factor:findFactor($('oTx').value),pages})};
+      };
+      if(grid.length<3||Math.max(...grid.map(r=>r.length))<2) asText();
+      else mapStage(grid,{label,ocr:true,factor,pages,asText,top:'<div class="note-box">จัดผลอ่านเป็นตารางแล้ว '+grid.length+' แถว — เลือกคอลัมน์ “รายการ” และ “จำนวนเงิน” ให้ตรง (แอปเดาให้จากหัวตาราง)</div>'});
+    }});
+  });
+}
+
+/* ---- ส่วนเลือกภาพ / ถ่ายภาพ / PDF → อ่าน (ใช้ร่วมกันทุกฟอร์ม) ---- */
+function ocrPick(box,o){
+  const files=[]; const touch=matchMedia('(pointer:coarse)').matches;
+  box.innerHTML=(o.onBack?'<button class="btn ghost sm" data-back type="button">'+ico('left')+'กลับ</button>':'')+
+    '<div class="note-box">'+o.hint+'</div>'+
+    '<div class="scan-acts">'+(touch?'<button class="btn" type="button" data-cam>'+ico('camera')+'ถ่ายภาพ</button>':'')+
+    '<button class="btn'+(touch?' line':'')+'" type="button" data-file>'+ico('imgplus')+'เลือกภาพ / PDF</button></div>'+
+    '<div class="scan-q" data-q></div>'+
+    '<div class="mapg"><label><span>หมุนภาพ</span><select data-rot><option value="0">อัตโนมัติ</option><option value="90">หมุนขวา 90°</option><option value="270">หมุนซ้าย 90°</option><option value="180">กลับหัว 180°</option></select></label>'+
+    '<div class="ocr-eng"><span>ตัวอ่าน</span><b data-eng>'+esc(ocrEngName())+'</b></div></div>'+
+    '<p class="sm-note">ถ่ายตรง ๆ ให้เห็นทั้งหน้า แสงสม่ำเสมอ ตัวหนังสือคมชัด · อ่านได้เฉพาะตัวพิมพ์ (ยังอ่านลายมือไม่ได้) · อ่านในเครื่องนี้ ไม่ส่งภาพออกไปที่ใด · ผลอ่านต้องตรวจทานก่อนใช้ทุกครั้ง</p>'+
+    '<div data-st></div>'+
+    '<input type="file" data-fi accept="image/*,application/pdf,.pdf" multiple hidden><input type="file" data-ci accept="image/*" capture="environment" hidden>';
+  const q=s=>box.querySelector(s), st=q('[data-st]');
+  const drawQ=()=>{
+    const el=q('[data-q]');
+    el.innerHTML=files.length?'<div class="scan-list">'+files.map((f,i)=>'<span class="scan-f">'+ico(/pdf/i.test(f.type)||/\.pdf$/i.test(f.name)?'pdf':'image')+'<span>'+(i+1)+'. '+esc(f.name||'ภาพถ่าย')+'</span><button type="button" class="ib" data-x="'+i+'" aria-label="เอาออก">×</button></span>').join('')+'</div>'+
+      '<div class="acts2" style="margin-top:8px"><button class="btn" type="button" data-go>'+ico('scan')+'เริ่มอ่าน ('+files.length+' ไฟล์)</button>'+(touch?'<button class="btn line sm" type="button" data-more>'+ico('camera')+'ถ่ายหน้าถัดไป</button>':'')+'</div>':'';
+    el.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{files.splice(+b.dataset.x,1);drawQ()});
+    const go=el.querySelector('[data-go]'); if(go) go.onclick=run;
+    const mo=el.querySelector('[data-more]'); if(mo) mo.onclick=()=>q('[data-ci]').click();
+  };
+  const add=e=>{[...e.target.files].forEach(f=>files.push(f));e.target.value='';drawQ();if(files.length&&!touch&&files.every(f=>/pdf/i.test(f.type)||/\.pdf$/i.test(f.name)))run()};
+  q('[data-fi]').onchange=add; q('[data-ci]').onchange=add;
+  q('[data-file]').onclick=()=>q('[data-fi]').click();
+  const cam=q('[data-cam]'); if(cam) cam.onclick=()=>q('[data-ci]').click();
+  const bk=q('[data-back]'); if(bk) bk.onclick=o.onBack;
+  let busy=false;
+  async function run(){
+    if(busy||!files.length) return; busy=true;
+    box.querySelectorAll('button,select').forEach(b=>b.disabled=true);
+    const msg=t=>{st.innerHTML='<div class="ocr-prog"><span class="spin"></span><span>'+esc(t)+'</span></div>'};
+    try{
+      const pages=await ocrFiles(files.slice(),+q('[data-rot]').value||0,msg);
+      const eng=q('[data-eng]'); if(eng) eng.textContent=ocrEngName();
+      if(!pages.some(p=>String(p.text||'').trim())) throw new Error('ไม่พบตัวอักษรในภาพ');
+      pages.engine=pages.some(p=>p.src==='ocr')?ocrEngName():'ข้อความในไฟล์ PDF';
+      o.onPages(pages);
+    }catch(e){
+      console.error(e); busy=false; box.querySelectorAll('button,select').forEach(b=>b.disabled=false);
+      const em=String(e&&e.message||e), net=/^load https|fetch|dynamically imported|NetworkError/i.test(em);
+      st.innerHTML='<div class="note-box" style="border-color:var(--warn)">'+(net?'โหลดตัวอ่าน OCR ไม่สำเร็จ — ตรวจการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่':'อ่านไม่สำเร็จ: '+esc(em))+'<br><small>ลองถ่ายใหม่ให้ชัดขึ้น หมุนภาพ หรือใช้ไฟล์ PDF'+(OCR_LOCAL?'':' (ไฟล์ .html ต้องต่ออินเทอร์เน็ตครั้งแรกเพื่อโหลดตัวอ่าน)')+'</small></div>';
+    }
+  }
+  drawQ();
+}
+const ocrThumbs=pages=>pages&&pages.some(p=>p.thumb)?'<details class="ocr-d"><summary>ภาพต้นฉบับ ('+pages.length+' หน้า)</summary><div class="ocr-thumbs">'+pages.map(p=>p.thumb?'<img alt="" src="'+p.thumb+'">':'').join('')+'</div></details>':'';
+/* ---- ตรวจทานค่าที่อ่านได้ทีละช่อง: ติ๊กเลือก แก้ได้ แล้วจึงนำไปใช้ ---- */
+function ocrReview(box,o){
+  const shown=v=>o.show?o.show(v):v;
+  const F=o.fields.map(f=>{const v=f.v==null?'':String(f.v),cur=f.cur==null?'':String(f.cur).trim();return {...f,v,cur,on:!!v&&!f.weak&&(!cur||cur===v.trim())}});
+  const found=F.filter(f=>f.v).length;
+  box.innerHTML=(o.onBack?'<button class="btn ghost sm" data-back type="button">'+ico('left')+'กลับ</button>':'')+
+    '<div class="note-box">อ่านด้วย '+esc(o.pages&&o.pages.engine||ocrEngName())+' · พบข้อมูล <b>'+found+'</b> ช่อง — ตรวจทานก่อนใช้: ติ๊กช่องที่จะใส่ แก้คำที่อ่านผิดได้ (ช่องที่มีข้อมูลเดิมอยู่แล้วจะไม่ถูกติ๊กไว้ให้)</div>'+
+    F.map((f,i)=>'<div class="ocr-f'+(f.on?'':' off')+'" data-i="'+i+'"><input type="checkbox" aria-label="ใช้ค่านี้"'+(f.on?' checked':'')+'><div><div class="lb">'+esc(f.l)+
+      (f.cur?'<span class="old">เดิม: '+esc(f.type==='date'?thDate(f.cur,false):f.cur)+'</span>':'')+(f.weak&&f.v?'<span class="old">(เดาจากที่อยู่ในเอกสาร)</span>':'')+'</div>'+
+      (f.type==='area'?'<textarea class="inp v" rows="2"></textarea>':'<input class="inp v"'+(f.type==='date'?' type="date"':f.type==='number'?' type="number" step="any" inputmode="decimal"':'')+'>')+'</div></div>').join('')+
+    '<details class="ocr-d"><summary>ข้อความที่อ่านได้ (แก้แล้วกด “แยกข้อมูลใหม่”)</summary><textarea class="inp ocr-tx" rows="8"></textarea><button class="btn line sm" data-re type="button">แยกข้อมูลใหม่จากข้อความนี้</button></details>'+
+    ocrThumbs(o.pages)+
+    '<div class="acts2"><button class="btn" data-ok type="button">'+ico('check')+(o.okLabel||'ใช้ข้อมูลที่เลือก')+'</button><button class="btn line sm" data-again type="button">'+ico('scan')+'อ่านเอกสารอื่น</button></div>';
+  box.querySelectorAll('.ocr-f').forEach(row=>{
+    const f=F[+row.dataset.i], cb=row.querySelector('input[type=checkbox]'), v=row.querySelector('.v');
+    v.value=f.v; if(v.tagName==='TEXTAREA') setTimeout(()=>grow(v));
+    cb.onchange=()=>{f.on=cb.checked;row.classList.toggle('off',!f.on)};
+    v.oninput=()=>{f.v=v.value;if(!cb.checked&&v.value.trim()){cb.checked=true;f.on=true;row.classList.remove('off')}};
+  });
+  const tx=box.querySelector('.ocr-tx'); tx.value=o.text||'';
+  box.querySelector('[data-re]').onclick=()=>o.reparse(tx.value);
+  box.querySelector('[data-again]').onclick=o.again;
+  const bk=box.querySelector('[data-back]'); if(bk) bk.onclick=o.onBack;
+  box.querySelector('[data-ok]').onclick=()=>{
+    const vals={}; F.forEach(f=>{if(f.on&&String(f.v).trim()!=='')vals[f.k]=String(f.v).trim()});
+    if(!Object.keys(vals).length){toast('ยังไม่ได้เลือกช่องที่จะใส่');return}
+    o.onApply(vals);
+  };
+}
+
+/* ---- ข้อมูลโครงการจากเอกสาร ---- */
+function openProjScan(){
+  const pr=PR(), pid=pr.id;
+  openModal('อ่านข้อมูลโครงการจากเอกสาร',mb=>{
+    const pick=()=>ocrPick(mb,{hint:'ถ่ายภาพหรือเลือกไฟล์ที่มีข้อมูลโครงการ เช่น <b>หน้าแรกของสัญญาจ้าง</b> · <b>แบบ ปร.4 / ปร.5</b> (ส่วนหัว) · ใบสั่งจ้าง · หนังสือแจ้งให้เริ่มงาน — ใส่หลายหน้าได้ แอปจะหาชื่อโครงการ ผู้ว่าจ้าง ผู้รับจ้าง สถานที่ (หมู่/ตำบล/อำเภอ/จังหวัด) เลขที่สัญญา วันเริ่ม อายุสัญญา และวงเงิน',onPages:pages=>show(ocrText(pages),pages)});
+    const show=(text,pages)=>{
+      const g=parseProject(text), bq=boqOf(pid), weak=g._weak||[];
+      const fields=[['name','ชื่อโครงการ','area'],['client','ผู้ว่าจ้าง'],['contractor','ผู้รับจ้าง'],['location','สถานที่ก่อสร้าง','area'],['moo','หมู่ที่'],['tambon','ตำบล'],['amphoe','อำเภอ'],['province','จังหวัด'],
+        ['contractNo','เลขที่สัญญา'],['extra','รายละเอียดใต้ชื่อโครงการ (แหล่งงบประมาณ / ปีงบประมาณ)'],['start','วันเริ่มสัญญา','date'],['days','อายุสัญญา (วัน)','number'],['value','วงเงินตามสัญญา (บาท) — ใช้เป็นยอดตามสัญญาใน ปร.4','number']]
+        .map(([k,l,type])=>({k,l,type,v:g[k]||'',cur:k==='value'?bq.contract:pr[k],weak:weak.includes(k)}));
+      ocrReview(mb,{fields,text,pages,reparse:t=>show(t,pages),again:pick,onApply:vals=>{
+        let n=0;
+        Object.keys(vals).forEach(k=>{if(k==='value')return;pr[k]=vals[k];n++});
+        if(vals.value){const cv=parseAmt(vals.value);if(cv>0){bq.contract=String(cv);n++;const cs=kindSum(bq,'con'),eq=kindSum(bq,'equip')*(num(bq.equipMult)||EQ_DEF);if(cs>0&&cv>eq)bq.factor=String(Math.round((cv-eq)/cs*1e6)/1e6)}}
+        if(vals.location){const lg=locParts(pr.location);['moo','tambon','amphoe','province'].forEach(k=>{if(lg[k]&&!String(pr[k]||'').trim())pr[k]=lg[k]})}
+        wxRelink(pid); dzApplyAll(); boqSyncProgress(R()); save(); closeModal(); renderForm();
+        toast('ใส่ข้อมูลโครงการจากเอกสารแล้ว '+n+' ช่อง — ตรวจอีกครั้งในหัวข้อ “โครงการ”');
+      }});
     };
-    $('fI').onchange=async e=>{
-      const files=[...e.target.files];e.target.value='';if(!files.length)return;
-      const rot=+($('oRot')?$('oRot').value:0); let text='';
-      try{
-        for(let k=0;k<files.length;k++){
-          const f=files[k], tag='ไฟล์ '+(k+1)+'/'+files.length;
-          if(/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name)){
-            busy(tag+': กำลังเปิด PDF…'); const {texts,canvases}=await readPdf(f,(p,n)=>busy(tag+': เตรียมหน้า '+p+'/'+n+'…'));
-            if(texts.join('').length>150) text+=texts.join('\n')+'\n';
-            else for(let p=0;p<canvases.length;p++){busy(tag+': OCR หน้า '+(p+1)+'/'+canvases.length+' (ครั้งแรกจะโหลดข้อมูลภาษาไทย อาจใช้เวลา)…');text+=await ocrCanvas(await prepCanvas(canvases[p],rot),pr=>busy(tag+': OCR หน้า '+(p+1)+' '+Math.round(pr*100)+'%'))+'\n'}
-          }else{
-            busy(tag+': กำลังเตรียมภาพ…'); const im=await loadImg(f), cv=await prepCanvas(im,rot);
-            busy(tag+': กำลังอ่านตัวอักษร (ครั้งแรกจะโหลดข้อมูลภาษาไทย อาจใช้เวลา)…');
-            text+=await ocrCanvas(cv,pr=>busy(tag+': OCR '+Math.round(pr*100)+'%'))+'\n';
-          }
-        }
-        stage.innerHTML='<div class="note-box">ข้อความที่อ่านได้ (แก้ไขได้ก่อนจัดรายการ — OCR ภาษาไทยอาจผิดตัวอักษร ควรเทียบกับต้นฉบับ)</div><textarea id="oTx" rows="9" style="width:100%;font:inherit;font-size:calc(13px*var(--fz));border:1px solid var(--line);border-radius:10px;padding:8px"></textarea><div class="acts2"><button class="btn sm" id="oGo" type="button">จัดเป็นรายการ</button></div>';
-        $('oTx').value=text.trim();
-        $('oGo').onclick=()=>{const items=parseLines($('oTx').value);if(!items.length){toast('จัดรายการไม่ได้ — ตรวจสอบข้อความหรือแก้ไขให้แต่ละบรรทัดมีชื่อรายการและจำนวนเงินท้ายบรรทัด');return}review(items,'อ่านด้วย OCR')};
-      }catch(err){fail(err,'อ่านภาพ/PDF ไม่สำเร็จ (ต้องต่ออินเทอร์เน็ตเพื่อโหลดตัวอ่าน OCR) — ลองใช้ไฟล์ Excel หรือวางข้อความแทน')}
+    pick();
+  });
+}
+
+/* ---- อ่านข้อความจากภาพ ใส่ในช่องข้อความของรายงาน ---- */
+function openTextScan(k,label){
+  const r=R();
+  openModal('อ่านข้อความจากภาพ — '+label,mb=>{
+    const pick=()=>ocrPick(mb,{hint:'ถ่ายภาพหรือเลือกไฟล์เอกสารที่พิมพ์ไว้ เช่น หนังสือสั่งการ บันทึกข้อความ รายงานผลการทดสอบ หรือหน้าจอข้อความ แล้วแอปจะแปลงเป็นข้อความให้ใส่ในช่อง <b>'+esc(label)+'</b>',onPages:pages=>show(pages)});
+    const show=pages=>{
+      const text=ocrText(pages);
+      mb.innerHTML='<div class="note-box">อ่านด้วย '+esc(pages.engine||ocrEngName())+' — แก้ข้อความที่อ่านผิดก่อนใส่ (ลบส่วนที่ไม่ต้องการได้)</div>'+
+        '<textarea class="inp ocr-tx" rows="10"></textarea>'+
+        '<label class="chk"><input type="checkbox" data-join> รวมบรรทัดที่ตัดกลางประโยคเป็นย่อหน้าเดียว</label>'+
+        (k==='work'?'':'<label class="chk"><input type="checkbox" data-dash> ขึ้นต้นแต่ละบรรทัดด้วย “-” (ทำเป็นข้อย่อย)</label>')+
+        ocrThumbs(pages)+
+        '<div class="acts2">'+(k==='work'?'<button class="btn" data-add type="button">'+ico('plus')+'เพิ่มเป็นรายการงาน (บรรทัดละ 1 งาน)</button>':'<button class="btn" data-app type="button">'+ico('plus')+'ใส่ต่อท้ายข้อความเดิม</button><button class="btn line sm" data-rep type="button">แทนที่ข้อความเดิม</button>')+
+        '<button class="btn line sm" data-again type="button">'+ico('scan')+'อ่านภาพอื่น</button></div>';
+      const tx=mb.querySelector('.ocr-tx'); tx.value=text;
+      const jn=mb.querySelector('[data-join]'); jn.onchange=()=>{tx.value=jn.checked?text.split(/\n\s*\n/).map(p=>p.replace(/\s*\n\s*/g,' ')).join('\n'):text};
+      const lines=()=>tx.value.split('\n').map(s=>s.trim()).filter(Boolean);
+      const out=()=>{const dash=mb.querySelector('[data-dash]');return lines().map(s=>dash&&dash.checked&&!/^[-–•]/.test(s)?'- '+s:s).join('\n')};
+      const put=rep=>{const t=out();if(!t){toast('ไม่มีข้อความ');return}r[k]=rep||!String(r[k]||'').trim()?t:String(r[k]).replace(/\s+$/,'')+'\n'+t;if(k==='issues')dzApply(r);save();closeModal();rerender(k);toast('ใส่ข้อความจากภาพแล้ว')};
+      const ap=mb.querySelector('[data-app]'); if(ap) ap.onclick=()=>put(false);
+      const rp=mb.querySelector('[data-rep]'); if(rp) rp.onclick=()=>{if(String(r[k]||'').trim()&&!confirm('แทนที่ข้อความเดิมทั้งหมด?'))return;put(true)};
+      const ad=mb.querySelector('[data-add]'); if(ad) ad.onclick=()=>{const ls=lines().map(s=>s.replace(/^[-–•]\s*|^\d{1,3}[.)]\s*/,'')).filter(Boolean);if(!ls.length){toast('ไม่มีข้อความ');return}ls.forEach(t=>r.work.push({id:uid(),t,area:'',pct:''}));save();closeModal();rerender('work');toast('เพิ่ม '+ls.length+' รายการงานแล้ว')};
+      mb.querySelector('[data-again]').onclick=pick;
     };
+    pick();
+  });
+}
+function ocrTextBtn(b,k,label){
+  const bt=document.createElement('button'); bt.type='button'; bt.className='btn ghost sm ocr-tb'; bt.innerHTML=ico('scan')+'อ่านข้อความจากภาพ';
+  bt.onclick=()=>openTextScan(k,label); b.appendChild(bt);
+}
+
+/* ---- วัสดุเข้าหน้างานจากใบส่งของ ---- */
+function openMatScan(){
+  const r=R();
+  openModal('อ่านรายการวัสดุจากใบส่งของ',mb=>{
+    const pick=()=>ocrPick(mb,{hint:'ถ่ายภาพ <b>ใบส่งของ / ใบกำกับสินค้า / ใบเสร็จ</b> ของวัสดุที่เข้าหน้างาน แอปจะแยกชื่อวัสดุ จำนวน และหน่วย (เช่น “ปูนซีเมนต์ 50 ถุง”) ให้ตรวจทานก่อนเพิ่ม',onPages:pages=>show(parseMaterials(ocrRowTexts(pages)),pages)});
+    const show=(items,pages)=>{
+      mb.innerHTML='<div class="note-box">อ่านด้วย '+esc(pages.engine||ocrEngName())+' · พบ <b>'+items.length+'</b> รายการ — ติ๊กออกรายการที่ไม่ใช่วัสดุ แก้ชื่อ/จำนวนที่อ่านผิดได้</div><div class="ocr-mats"></div>'+
+        '<button class="btn ghost sm" data-new type="button">'+ico('plus')+'เพิ่มแถว</button>'+
+        '<details class="ocr-d"><summary>ข้อความที่อ่านได้</summary><textarea class="inp ocr-tx" rows="8"></textarea><button class="btn line sm" data-re type="button">แยกรายการใหม่จากข้อความนี้</button></details>'+ocrThumbs(pages)+
+        '<div class="acts2"><button class="btn" data-ok type="button">'+ico('check')+'เพิ่มในรายการวัสดุ</button><button class="btn line sm" data-again type="button">'+ico('scan')+'อ่านใบอื่น</button></div>';
+      const box=mb.querySelector('.ocr-mats');
+      const draw=()=>{box.innerHTML=items.length?'':'<p class="muted">ไม่พบรายการที่มีจำนวนและหน่วย — แก้ข้อความด้านล่างให้แต่ละบรรทัดเป็น “ชื่อวัสดุ จำนวน หน่วย” แล้วกดแยกใหม่ หรือกด “เพิ่มแถว”</p>';
+        items.forEach(it=>{const row=document.createElement('div');row.className='ocr-m'+(it.inc?'':' off');
+          row.innerHTML='<input type="checkbox" aria-label="เพิ่ม"><input class="n" placeholder="รายการวัสดุ"><input class="q" type="number" step="any" inputmode="decimal" placeholder="จำนวน"><input class="u" placeholder="หน่วย" list="unitDl">';
+          const c=row.querySelector('input[type=checkbox]');c.checked=it.inc;c.onchange=()=>{it.inc=c.checked;row.classList.toggle('off',!it.inc)};
+          ['n','q','u'].forEach(k=>{const e=row.querySelector('.'+k);e.value=it[k];e.oninput=()=>{it[k]=e.value}});box.appendChild(row)})};
+      draw();
+      const tx=mb.querySelector('.ocr-tx'); tx.value=ocrText(pages);
+      mb.querySelector('[data-re]').onclick=()=>{items=parseMaterials(tx.value.split('\n'));draw();toast('พบ '+items.length+' รายการ')};
+      mb.querySelector('[data-new]').onclick=()=>{items.push({n:'',q:'',u:'',inc:true});draw()};
+      mb.querySelector('[data-again]').onclick=pick;
+      mb.querySelector('[data-ok]').onclick=()=>{
+        const sel=items.filter(x=>x.inc&&String(x.n).trim()); if(!sel.length){toast('ยังไม่ได้เลือกรายการ');return}
+        sel.forEach(x=>r.materials.push({id:uid(),n:String(x.n).trim(),q:String(x.q||''),u:String(x.u||''),o:''}));
+        save(); closeModal(); rerender('materials'); refreshDL(); toast('เพิ่มวัสดุ '+sel.length+' รายการแล้ว');
+      };
+    };
+    pick();
+  });
+}
+
+/* ---- ปร.5: อ่าน Factor F ---- */
+function openFactorScan(pid){
+  const bq=boqOf(pid);
+  openModal('อ่าน Factor F จาก ปร.5',mb=>{
+    const pick=()=>ocrPick(mb,{hint:'ถ่ายภาพหรือเลือกไฟล์ <b>แบบ ปร.5</b> (สรุปค่าก่อสร้าง) แอปจะหาค่า <b>Factor F</b> เพื่อใช้คูณค่างานต้นทุนของงานก่อสร้าง',onBack:()=>openBoq(pid),onPages:pages=>show(ocrText(pages),pages)});
+    const show=(text,pages)=>{
+      const f=findFactor(text);
+      ocrReview(mb,{fields:[{k:'factor',l:'Factor F (งานก่อสร้าง)',type:'number',v:f==null?'':String(f),cur:bq.factor&&bq.factor!=='1'?bq.factor:''}],text,pages,
+        reparse:t=>show(t,pages),again:pick,onBack:()=>openBoq(pid),okLabel:'ใช้ค่า Factor F นี้',onApply:v=>{
+          const x=parseFloat(v.factor); if(!(x>0)){toast('ค่า Factor ไม่ถูกต้อง');return}
+          bq.factor=String(x); if(bq.items.length) bq.contract=String(Math.round(contractSum(bq)*100)/100);
+          save(); toast('ตั้ง Factor F = '+x+' แล้ว'); openBoq(pid);
+        }});
+    };
+    pick();
   });
 }
 
@@ -2029,7 +2629,7 @@ function sheetBlocks(){
     const bq=boqOf(r.projectId);
     if(bq.items.length){
       const prog=progOf(r), pv=prevOf(r), pp=pv?progOf(pv):{}, tt=boqSum(bq), a=boqActual(bq,prog), pl=boqPlan(bq,pr,r.date), G='grid-template-columns:34px 1fr 70px 64px 64px';
-      const rows=bq.items.map((it,i)=>({it,i,p:num(prog[it.id]),d:num(prog[it.id])-num(pp[it.id])})).filter(x=>x.p>0||x.d!==0).map(x=>'<div class="tr" style="'+G+'"><span>'+esc(x.it.no||x.i+1)+'</span><span>'+esc(x.it.name)+(kindOf(x.it)==='equip'?' <em style="font-style:normal;color:#8a9397">(ครุภัณฑ์)</em>':'')+'</span><span class="q">'+fmtN(itemVal(bq,x.it)/tt*100,2)+'%</span><span class="q">'+fmtN(x.p,0)+'%</span><span class="q">'+(x.d?(x.d>0?'+':'')+fmtN(x.d,0)+'%':'')+'</span></div>');
+      const rows=bq.items.map((it,i)=>({it,i,p:num(prog[it.id]),d:num(prog[it.id])-num(pp[it.id])})).filter(x=>x.p>0||x.d!==0).map(x=>'<div class="tr" style="'+G+'"><span>'+esc(x.it.no||x.i+1)+'</span><span>'+esc(x.it.name)+(kindOf(x.it)==='equip'?' <em style="font-style:normal;color:#8a9397">(ครุภัณฑ์)</em>':'')+(iqty(x.it)?' <em style="font-style:normal;color:#8a9397">('+qfmt(x.p*iqty(x.it)/100)+' / '+qfmt(iqty(x.it))+' '+esc(x.it.unit||'')+')</em>':'')+'</span><span class="q">'+fmtN(itemVal(bq,x.it)/tt*100,2)+'%</span><span class="q">'+fmtN(x.p,0)+'%</span><span class="q">'+(x.d?(x.d>0?'+':'')+fmtN(x.d,0)+'%':'')+'</span></div>');
       const head='<div class="wl" style="margin:0 0 6px"><b>ผลงานสะสมรวมตาม BOQ:</b> '+fmtN(a,2)+'%'+(pl!=null?' · แผน '+fmtN(pl,2)+'% · ผลต่าง '+(a-pl>=0?'+':'')+fmtN(a-pl,2)+'%':'')+(bq.items.some(i=>kindOf(i)==='equip')?'<br>'+['con','equip'].map(k=>{const its=bq.items.filter(i=>kindOf(i)===k);if(!its.length)return '';const t=its.reduce((q,i)=>q+itemVal(bq,i),0),e=its.reduce((q,i)=>q+itemVal(bq,i)*clampP(prog[i.id])/100,0);return (k==='equip'?'ครุภัณฑ์':'งานก่อสร้าง')+' น้ำหนัก '+fmtN(t/tt*100,2)+'% ครบ '+fmtN(t?e/t*100:0,1)+'%'}).filter(Boolean).join(' · '):'')+'</div><div class="th" style="'+G+'"><span>#</span><span>รายการ</span><span style="text-align:right">น้ำหนัก</span><span style="text-align:right">สะสม</span><span style="text-align:right">วันนี้</span></div>';
       B.push(...chain('chart','ความก้าวหน้าตามรายการงาน (BOQ)',head,rows,'ยังไม่มีรายการที่มีความก้าวหน้า'));
       const svg=sCurveSVG(r.projectId,706,200); if(svg) B.push(mk(hd('chart','กราฟ S-Curve (แผน เทียบ ผลงานจริง)')+svg,true));
@@ -2603,8 +3203,21 @@ function openDisasters(){
       if(!d.areas||!d.areas.length) d.areas=[{amphoe:'',tambon:'',moos:''}];
       const tam=[...new Set(Object.values(app.projects).map(p=>String(p.tambon||'').trim()).filter(Boolean))];
       const amp=[...new Set(Object.values(app.projects).map(p=>String(p.amphoe||'').trim()).filter(Boolean))];
+      let ocrNote='';
+      const scan=()=>ocrPick(mb,{hint:'ถ่ายภาพหรือเลือกไฟล์ <b>ประกาศจังหวัด เรื่อง ประกาศเขตการให้ความช่วยเหลือผู้ประสบภัยพิบัติกรณีฉุกเฉิน</b> (รวมหน้าบัญชีรายชื่อพื้นที่ / ตาราง อำเภอ–ตำบล–หมู่ที่) แอปจะเติมประเภทภัย จังหวัด เลขที่ วันที่ และพื้นที่ให้ในแบบฟอร์ม',onBack:draw,onPages:pages=>{
+        const text=ocrText(pages), g=parseDisaster(text,ocrGrid(pages)), got=[];
+        if(g.type){d.type=g.type;got.push('ประเภทภัย');if(g.typeOther)d.typeOther=g.typeOther}
+        [['province','จังหวัด'],['no','เลขที่'],['start','วันเริ่มมีผล'],['end','วันสิ้นสุด'],['signed','วันที่ประกาศ']].forEach(([k,l])=>{if(g[k]){d[k]=g[k];got.push(l)}});
+        if(g.areas.length){
+          const blank=d.areas.every(a=>!String(a.tambon||'').trim());
+          if(blank||confirm('แทนที่พื้นที่เดิม '+d.areas.length+' ตำบล ด้วยพื้นที่จากเอกสาร '+g.areas.length+' ตำบล?\n(กด “ยกเลิก” = เพิ่มต่อท้าย)')) d.areas=g.areas; else d.areas=d.areas.concat(g.areas);
+          got.push(g.areas.length+' ตำบล');
+        }
+        ocrNote='<div class="note-box ocr-note">อ่านด้วย '+esc(pages.engine)+' · เติมให้แล้ว: <b>'+esc(got.join(', ')||'ไม่พบข้อมูลที่ตรงรูปแบบ')+'</b><br>ตรวจทานทุกช่องกับต้นฉบับก่อนกด “บันทึกประกาศ”<details class="ocr-d"><summary>ข้อความที่อ่านได้</summary><pre class="ocr-pre">'+esc(text)+'</pre></details>'+ocrThumbs(pages)+'</div>';
+        draw();
+      }});
       const draw=()=>{
-        mb.innerHTML='<button class="btn ghost sm" id="dzBack" type="button">'+ico('left')+'กลับ</button>'+
+        mb.innerHTML='<div class="acts2" style="margin-top:0"><button class="btn ghost sm" id="dzBack" type="button">'+ico('left')+'กลับ</button><button class="btn line sm" id="dzScan" type="button">'+ico('scan')+'อ่านจากภาพประกาศ / PDF</button></div>'+ocrNote+
           '<label class="fl"><span>ประเภทภัย</span><select class="inp" id="dzType">'+DZ_TYPES.map(t=>'<option'+(t===d.type?' selected':'')+'>'+t+'</option>').join('')+'</select></label>'+
           (d.type==='อื่น ๆ'?'<label class="fl"><span>ระบุประเภทภัย</span><input class="inp" data-k="typeOther" placeholder="เช่น คลื่นพายุซัดฝั่ง"></label>':'')+
           '<div class="g2"><label class="fl"><span>จังหวัด</span><input class="inp" data-k="province" placeholder="'+DZ_PROV_DEF+'"></label><label class="fl"><span>เลขที่ประกาศ (ถ้ามี)</span><input class="inp" data-k="no" placeholder="เช่น 12/2569"></label></div>'+
@@ -2623,7 +3236,7 @@ function openDisasters(){
           const del=row.querySelector('.dz-del');if(del)del.onclick=()=>{d.areas.splice(+row.dataset.i,1);draw()}});
         $('dzType').onchange=e=>{d.type=e.target.value;draw()};
         $('dzAddA').onclick=()=>{d.areas.push({amphoe:'',tambon:'',moos:''});draw()};
-        $('dzBack').onclick=list;
+        $('dzBack').onclick=list; $('dzScan').onclick=scan;
         $('dzSave').onclick=()=>{
           d.areas=d.areas.filter(a=>String(a.tambon||'').trim());
           if(!parseD(d.start)) return alert('กรุณาใส่วันที่เริ่มมีผล');

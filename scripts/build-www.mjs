@@ -31,6 +31,34 @@ const VENDOR = {
 };
 for (const [n, f] of Object.entries(VENDOR)) fs.copyFileSync(f, P('www/vendor', n));
 
+/* ---------- 1b) ตัวอ่าน OCR ภาษาไทย (thai-ocr-web = OpenThai 2.1 OCR Text) → www/ocr/ ใช้ออฟไลน์ได้ ----------
+   ไฟล์ .mjs เปลี่ยนเป็น .js เพื่อให้ Android WebView / Electron ส่งชนิดไฟล์เป็น JavaScript ถูกต้อง */
+let ocrLocal = true;
+try {
+  fs.mkdirSync(P('www/ocr/models'), { recursive: true });
+  fs.mkdirSync(P('www/ocr/ort'), { recursive: true });
+  const T = (...a) => nm('thai-ocr-web', ...a);
+  fs.copyFileSync(T('src/line-ocr.js'), P('www/ocr/line-ocr.js'));
+  fs.copyFileSync(T('src/thai-norm.js'), P('www/ocr/thai-norm.js'));
+  fs.copyFileSync(T('vendor/opencv/opencv-ocr.mjs'), P('www/ocr/opencv-ocr.js'));
+  for (const f of ['det.yml', 'config.json', 'rec_dict.txt', 'det.onnx', 'rec.onnx', 'rec2.onnx', 'NOTICE']) {
+    const src = P('node_modules/thai-ocr-web/models', f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, P('www/ocr/models', f)); else if (f !== 'NOTICE') throw new Error('ไม่พบโมเดล ' + f);
+  }
+  for (const f of ['LICENSE', 'NOTICE']) { const src = P('node_modules/thai-ocr-web', f); if (fs.existsSync(src)) fs.copyFileSync(src, P('www/ocr', 'thai-ocr-web-' + f)); }
+  const dist = P('node_modules/onnxruntime-web/dist');
+  const ortMap = { 'ort.wasm.min.mjs': 'ort.wasm.min.js', 'ort-wasm-simd-threaded.mjs': 'ort-wasm-simd-threaded.js', 'ort-wasm-simd-threaded.wasm': 'ort-wasm-simd-threaded.wasm' };
+  for (const [a, b] of Object.entries(ortMap)) fs.copyFileSync(need(path.join(dist, a)), P('www/ocr/ort', b));
+  // clipper-lib เป็น CommonJS → ห่อเป็น ES module
+  const clip = fs.readFileSync(nm('clipper-lib/clipper.js'), 'utf8');
+  fs.writeFileSync(P('www/ocr/clipper.js'), 'const module={exports:{}},exports=module.exports;\n' + clip + '\nexport default (module.exports&&module.exports.Clipper?module.exports:globalThis.ClipperLib);\n');
+  const mb = d => fs.readdirSync(d, { recursive: true }).reduce((s, f) => { const q = path.join(d, f); return s + (fs.statSync(q).isFile() ? fs.statSync(q).size : 0) }, 0);
+  console.log('ตัวอ่าน OCR (ในเครื่อง):', (mb(P('www/ocr')) / 1048576).toFixed(1), 'MB');
+} catch (e) {
+  ocrLocal = false; fs.rmSync(P('www/ocr'), { recursive: true, force: true });
+  console.log('::warning::ไม่ได้รวมตัวอ่าน OCR ไว้ในแอป (' + e.message + ') — แอปจะโหลดตัวอ่านจากอินเทอร์เน็ตตอนใช้งานแทน');
+}
+
 /* ---------- 2) ฟอนต์ ---------- */
 const plex = { 300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'SemiBold' };
 let plexCss = '';
@@ -105,6 +133,9 @@ rep('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', 'vend
 rep('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js', 'vendor/tesseract.min.js');
 rep('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', 'vendor/pdf.min.js');
 rep(/pdfjsLib\.GlobalWorkerOptions\.workerSrc=URL\.createObjectURL\(new Blob\(\[[^\]]*\],\{type:'text\/javascript'\}\)\);/, "pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdf.worker.min.js';");
+
+// OCR: ใช้ไฟล์ตัวอ่านในแอป
+if (ocrLocal) rep("const OCR_LOCAL='';", "const OCR_LOCAL='ocr/';");
 
 // บันทึกไฟล์ผ่านหน้าต่างแชร์ของ Android
 rep('async function saveFile(filename,blob){', 'async function saveFile(filename,blob){\n  if(window.NativeBridge&&NativeBridge.active){try{return await NativeBridge.save(filename,blob)}catch(e){console.error(e);alert(\'บันทึกไฟล์ไม่สำเร็จ: \'+(e&&e.message||e));return false}}');
