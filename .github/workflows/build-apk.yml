@@ -18,18 +18,21 @@ jobs:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       FIREBASE_API_KEY: ${{ vars.FIREBASE_API_KEY }}
       FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
-      APP_VERSION: '1.0'
+      RELEASE_REPO: ${{ vars.RELEASE_REPO }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
+
+      - name: Read version
+        run: echo "APP_VERSION=$(node -p "require('./version.json').version")" >> "$GITHUB_ENV"
 
       - name: Install packages
         run: npm install --no-audit --no-fund
@@ -60,56 +63,54 @@ jobs:
       - name: Sync web into Android
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Build APK
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
-
-      - name: Rename APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk "DailyReport-v${APP_VERSION}-debug.apk"
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            ./gradlew assembleRelease --no-daemon \
+              -Pandroid.injected.signing.store.file="$RUNNER_TEMP/release.keystore" \
+              -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+              -Pandroid.injected.signing.key.alias="${KEY_ALIAS:-dailyreport}" \
+              -Pandroid.injected.signing.key.password="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+            cp app/build/outputs/apk/release/app-release.apk "../DailyReport-${APP_VERSION}.apk"
+          else
+            ./gradlew assembleDebug --no-daemon
+            cp app/build/outputs/apk/debug/app-debug.apk "../DailyReport-${APP_VERSION}.apk"
+            echo "::warning::ยังไม่ได้ตั้ง KEYSTORE_B64 — APK ลงนามแบบชั่วคราว ติดตั้งทับเวอร์ชันเก่าไม่ได้"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: DailyReport-v1.0-debug-apk
-          path: DailyReport-v*-debug.apk
+          name: android-apk
+          path: DailyReport-*.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: DailyReport-v1.0-web-for-computer
+          name: web-html
           path: dist/daily-report.html
-
-      - name: Build signed release APK
-        if: env.KEYSTORE_B64 != ''
-        working-directory: android
-        run: |
-          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
-          ./gradlew assembleRelease --no-daemon \
-            -Pandroid.injected.signing.store.file="$RUNNER_TEMP/release.keystore" \
-            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-
-      - uses: actions/upload-artifact@v4
-        if: env.KEYSTORE_B64 != ''
-        with:
-          name: DailyReport-v1.0-release-apk
-          path: android/app/build/outputs/apk/release/*.apk
 
   windows:
     runs-on: windows-latest
     env:
       FIREBASE_API_KEY: ${{ vars.FIREBASE_API_KEY }}
       FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+      RELEASE_REPO: ${{ vars.RELEASE_REPO }}
     defaults:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
+
+      - name: Read version
+        run: |
+          echo "APP_VERSION=$(node -p "require('./version.json').version")" >> "$GITHUB_ENV"
+          echo "APP_SEMVER=$(node -p "const v=String(require('./version.json').version).split('.');while(v.length<3)v.push('0');v.slice(0,3).join('.')")" >> "$GITHUB_ENV"
 
       - name: Install packages
         run: npm install --no-audit --no-fund
@@ -130,11 +131,46 @@ jobs:
         working-directory: desktop
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: npx electron-builder --win --publish never
+        run: >
+          npx electron-builder --win --publish never
+          -c.extraMetadata.version="$APP_SEMVER"
+          -c.nsis.artifactName="DailyReport-Setup-$APP_VERSION.exe"
+          -c.portable.artifactName="DailyReport-$APP_VERSION-portable.exe"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: DailyReport-v1.0-windows-exe
-          path: |
-            desktop/release/DailyReport-Setup-1.0.exe
-            desktop/release/DailyReport-1.0-portable.exe
+          name: windows-exe
+          path: desktop/release/*.exe
+
+  # ---------- เผยแพร่เวอร์ชันใหม่ (แอปจะตรวจเจอและแจ้งอัปเดต) ----------
+  release:
+    needs: [build, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+          REPO: ${{ vars.RELEASE_REPO || github.repository }}
+          BUILD: ${{ github.run_number }}
+        run: |
+          VER=$(node -p "require('./version.json').version")
+          TAG="v$VER"
+          TITLE="Daily Report $VER (build $BUILD)"
+          node -e "const v=require('./version.json');console.log((v.notes||[]).map(n=>'- '+n).join('\n'))" > notes.md
+          printf '\nbuild %s\n' "$BUILD" >> notes.md
+          ls -la out
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            gh release edit "$TAG" --repo "$REPO" --title "$TITLE" --notes-file notes.md --latest
+          else
+            gh release create "$TAG" --repo "$REPO" --title "$TITLE" --notes-file notes.md --latest
+          fi
+          gh release upload "$TAG" out/* --repo "$REPO" --clobber
